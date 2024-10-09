@@ -1,7 +1,7 @@
-export function App() {
+import Login from './login/index';
+
+export function App() { 
   return (
-    <div>
-      <h1>Frontend</h1>
-    </div>
+    <Login />
   )
 }
