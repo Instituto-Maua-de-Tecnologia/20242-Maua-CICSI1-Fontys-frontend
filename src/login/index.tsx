@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import Image_background_login from '../assets/Image_background_login.png';
 import logo_maua from '../assets/logo_maua.png';
-import english from '../assets/english.svg';
-import portuguese from '../assets/portuguese.svg';
 import { InputText } from 'primereact/inputtext';
 import { Eye, EyeSlash } from 'phosphor-react';
+import { useLanguage } from '../components/languageProvider';
+import TranslationButtons from '../components/translationButtons';
 
 const translations = {
   en: {
@@ -29,14 +29,12 @@ const translations = {
   }
 };
 
-type Language = 'en' | 'pt';
-
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [hasError, setHasError] = useState(false); 
-  const [language, setLanguage] = useState<Language>('en'); 
+  const [hasError, setHasError] = useState(false);
+  const { currentLanguage } = useLanguage();
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -44,17 +42,13 @@ export default function Login() {
 
   const handleLogin = () => {
     if (!email || !password) {
-      setHasError(true); 
+      setHasError(true);
       return;
     } else {
       setEmail('');
       setPassword('');
-      setHasError(false); 
+      setHasError(false);
     }
-  };
-
-  const selectLanguage = (lang: Language) => {
-    setLanguage(lang); 
   };
 
   return (
@@ -65,29 +59,14 @@ export default function Login() {
         className="w-full h-full object-cover"
       />
       <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-70 flex justify-center items-center">
-        <div className='absolute top-5 right-5'>
-          <button
-            className={`transition duration-200 transform hover:scale-110 ${language === 'pt' ? '' : 'opacity-50 shadow-lg'}`}
-            onClick={() => selectLanguage('pt')}
-          >
-            <img src={portuguese} alt="portuguese button" />
-          </button>
-        </div>
-        <div>
-          <button
-            className={`absolute top-5 right-20 transition duration-200 transform hover:scale-110 ${language === 'en' ? '' : 'opacity-50 shadow-lg'}`}
-            onClick={() => selectLanguage('en')}
-          >
-            <img src={english} alt="english button" />
-          </button>
-        </div>
+        <TranslationButtons/>
 
         <div className='bg-[#EDEDED] w-[450px] h-[520px] z-10 rounded-3xl flex flex-col items-center pt-6 shadow-lg shadow-slate-500'>
           <img src={logo_maua} alt="logo_maua" className='mb-4' />
-          <h1 className='text-[#000066] text-xl pt-3'>{translations[language].loginTitle}</h1>
+          <h1 className='text-[#000066] text-xl pt-3'>{translations[currentLanguage].loginTitle}</h1>
 
           <InputText
-            placeholder={translations[language].emailPlaceholder}
+            placeholder={translations[currentLanguage].emailPlaceholder}
             value={email}
             onChange={(e) => {
               setEmail(e.target.value);
@@ -99,7 +78,7 @@ export default function Login() {
 
           <div className="relative w-80 mb-1">
             <InputText
-              placeholder={translations[language].passwordPlaceholder}
+              placeholder={translations[currentLanguage].passwordPlaceholder}
               value={password}
               onChange={(e) => {
                 setPassword(e.target.value);
@@ -120,7 +99,7 @@ export default function Login() {
 
           {hasError && (
             <div className='w-80 text-left'>
-              <p className="text-red-600 text-sm mb-2">{translations[language].errorMessage}</p>
+              <p className="text-red-600 text-sm mb-2">{translations[currentLanguage].errorMessage}</p>
             </div>
           )}
 
@@ -129,7 +108,7 @@ export default function Login() {
               href="URL_DO_LINK"
               className='text-[#000066] text-base transition duration-100 ease-in-out transform hover:scale-105'
             >
-              {translations[language].forgotPassword}
+              {translations[currentLanguage].forgotPassword}
             </a>
           </div>
 
@@ -137,14 +116,14 @@ export default function Login() {
             className='bg-[#000066] text-white w-64 h-11 rounded-xl text-xl mt-5 transition duration-100 transform hover:scale-105'
             onClick={handleLogin}
           >
-            {translations[language].loginButton}
+            {translations[currentLanguage].loginButton}
           </button>
 
-          <p className='py-2 text-lg text-[#000066]'>{translations[language].orText}</p>
+          <p className='py-2 text-lg text-[#000066]'>{translations[currentLanguage].orText}</p>
           <button
             className='bg-[#000066] text-white w-64 h-11 rounded-xl text-xl transition duration-100 transform hover:scale-105'
           >
-            {translations[language].microsoftButton}
+            {translations[currentLanguage].microsoftButton}
           </button>
         </div>
       </div>
