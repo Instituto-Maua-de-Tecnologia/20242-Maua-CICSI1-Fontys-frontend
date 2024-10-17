@@ -1,7 +1,11 @@
 import Login from './login/index';
+import ProfessorSchedule from './professorSchedule';
 
 export function App() { 
   return (
-    <Login />
+    <div>
+      <Login />
+      {/* <ProfessorSchedule /> */}
+    </div>
   )
 }
