@@ -2,6 +2,8 @@ import React, { useState, ChangeEvent } from 'react';
 import TranslationButtons from '../components/translationButtons';
 import BtnCoordinator from '../assets/btn-professor.png';
 import BtnCoordinator2 from '../assets/btn-professor2.png';
+import LogoChat from '../assets/chatLogo.png';
+
 
 function CoordinatorScreen() {
   const [isPopupVisible, setPopupVisible] = useState(false);
@@ -24,25 +26,26 @@ function CoordinatorScreen() {
       <TranslationButtons />
       <div className="grid grid-cols-2 gap-20 mb-8">
         <button
-          className="w-80 h-64 relative rounded-[30px] shadow-md transition-all duration-300 transform hover:scale-110"
-          style={{ backgroundImage: `url(${BtnCoordinator})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
-          onClick={handleGenerateScheduleClick}
-        >
-          <div className="absolute inset-0 rounded-[30px] flex justify-center items-center bg-black bg-opacity-30 hover:bg-opacity-50 transition-all duration-300">
-            <div className="text-center text-3xl text-white opacity-0 hover:opacity-100 transition-opacity duration-300">
+            className="w-80 h-64 relative rounded-[30px] shadow-md transition-all duration-300 transform hover:scale-110 "
+            style={{ backgroundImage: `url(${BtnCoordinator})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+            onClick={handleGenerateScheduleClick}
+          >
+          <div className="absolute inset-0 rounded-[30px] flex justify-center items-center bg-black hover:bg-opacity-30 transition-all duration-300 opacity-0 hover:opacity-100">
+            <div className="text-center text-3xl text-white">
               Generate Schedule
             </div>
           </div>
         </button>
 
+
         <button
-          className="w-80 h-64 relative rounded-[30px] shadow-md transition-all duration-300 transform hover:scale-110"
+          className="w-80 h-64 relative rounded-[30px] shadow-md  transition-all duration-300 transform hover:scale-110"
           style={{ backgroundImage: `url(${BtnCoordinator2})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
         >
-          <div className="absolute inset-0 rounded-[30px] flex justify-center items-center bg-black bg-opacity-30 hover:bg-opacity-50 transition-all duration-300">
-            <div className="text-center text-3xl text-white opacity-0 hover:opacity-100 transition-opacity duration-300">
-              Professor's Schedule
-            </div>
+        <div className="absolute inset-0 rounded-[30px] flex justify-center items-center bg-black hover:bg-opacity-30 transition-all duration-300 opacity-0 hover:opacity-100">
+          <div className="text-center text-3xl text-white">
+            Professor's Schedule
+          </div>
           </div>
         </button>
       </div>
@@ -61,11 +64,13 @@ function CoordinatorScreen() {
             clipRule="evenodd"
           />
         </svg> */}
-        <h2 className="text-center text-2xl">Generate schedule with ChatGPT</h2>
+        {/* <h2 className="text-center text-2xl">Generate schedule with ChatGPT</h2> */}
         {/* icon Chat GPT */}
       </div>
-      <button className="w-64 h-16 bg-[#000066] text-white rounded-[10px] shadow-md hover:shadow-lg ">
-        <div className="text-center text-2xl">Generate</div>
+      <button className="w-150 h-16 bg-[#000066] text-white rounded-[10px] shadow-md hover:shadow-lg flex items-center justify-center space-x-2 transition-all duration-300 transform hover:scale-110 px-6 py-2 " onClick={handleGenerateScheduleClick}>
+        <span className="text-xl">Generate schedule with ChatGPT</span>
+        <img src={LogoChat} alt="ChatGPT Logo" className="w-10" />
+        
       </button>
 
       {isPopupVisible && (
