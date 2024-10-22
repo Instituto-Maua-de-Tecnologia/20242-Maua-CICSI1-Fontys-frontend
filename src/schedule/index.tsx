@@ -31,33 +31,34 @@ const ScheduleTable: React.FC = () => {
     <div className="p-5">
       <h2 className="text-2xl font-semibold mb-4">Inform Availability</h2>
       <div className="flex justify-between">
-        <table className="table-auto border-collapse border border-gray-500">
-          <thead>
-            <tr>
-              <th className="border border-gray-500 p-2"></th>
-              {days.map((day, index) => (
-                <th key={index} className="border border-gray-500 p-2">{day}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {times.map((time, timeIndex) => (
-              <tr key={timeIndex}>
-                <td className="border border-gray-500 p-2">{time}</td>
-                {days.map((day, dayIndex) => (
-                  <td
-                    key={dayIndex}
-                    className={`border border-gray-500 p-2 cursor-pointer ${availability[day.toLowerCase()]?.includes(timeIndex) ? 'bg-blue-500' : 'bg-white'} hover:bg-blue-200`}
-                    onClick={() => toggleAvailability(day.toLowerCase(), timeIndex)}
-                  >
-                  </td>
+        <div className="overflow-hidden rounded-lg border border-gray-500">
+          <table className="table-auto border-collapse">
+            <thead>
+              <tr>
+                <th className="border border-gray-500 p-2"></th>
+                {days.map((day, index) => (
+                  <th style={{"width": 90}} key={index} className="border border-gray-500 p-2">{day}</th>
                 ))}
               </tr>
-            ))}
-          </tbody>
-        </table>
-
+            </thead>
+            <tbody>
+              {times.map((time, timeIndex) => (
+                <tr key={timeIndex}>
+                  <td className="border border border-gray-500 p-2">{time}</td>
+                  {days.map((day, dayIndex) => (
+                    <td
+                      key={dayIndex}
+                      className={`border border-gray-500 p-2 cursor-pointer ${availability[day.toLowerCase()]?.includes(timeIndex) ? 'bg-blue-500' : 'bg-white'} hover:bg-blue-200`}
+                      onClick={() => toggleAvailability(day.toLowerCase(), timeIndex)}
+                    >
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
+      </div>
     </div>
   );
 };
