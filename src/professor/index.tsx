@@ -1,12 +1,10 @@
-import React, { useState, ChangeEvent } from 'react';
 import TranslationButtons from '../components/translationButtons';
 import BtnCoordinator from '../assets/btn-professor.png';
 import BtnCoordinator2 from '../assets/btn-professor2.png';
 
-
-function ProfessorScreen() {
+export default function Professor() {
   return (
-    <div className="absolute top-0 left-0 w-full h-full bg-[#E8E9EB] flex flex-col justify-center items-center">
+    <div className="absolute top-0 left-0 w-full h-full bg-light-gray flex flex-col justify-center items-center">
       <TranslationButtons />
       <text className='text-center text-3xl text-black mb-8'>Hello, Name!</text>
       <div className="grid grid-cols-2 gap-20 mb-20">
@@ -36,5 +34,3 @@ function ProfessorScreen() {
     </div>
   );
 }
-
-export default ProfessorScreen;
