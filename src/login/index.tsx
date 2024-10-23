@@ -5,6 +5,7 @@ import { InputText } from 'primereact/inputtext';
 import { Eye, EyeSlash } from 'phosphor-react';
 import { useLanguage } from '../components/languageProvider';
 import TranslationButtons from '../components/translationButtons';
+import { useNavigate } from 'react-router-dom';
 
 const translations = {
   en: {
@@ -35,6 +36,7 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [hasError, setHasError] = useState(false);
   const { currentLanguage } = useLanguage();
+  const navigate = useNavigate();
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
