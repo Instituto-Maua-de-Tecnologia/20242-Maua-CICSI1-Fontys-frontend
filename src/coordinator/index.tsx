@@ -4,6 +4,32 @@ import BtnCoordinator from '../assets/btn-professor.png';
 import BtnCoordinator2 from '../assets/btn-professor2.png';
 import LogoChat from '../assets/chatLogo.png';
 
+const translations = {
+  en: {
+    generateSchedule: 'Generate Schedule',
+    professorsSchedule: 'Professor\'s Schedule',
+    buttonChatGPT: 'Generate schedule with ChatGPT',
+    computerScience: 'Computer Science',
+    informationSystems: 'Information Systems',
+    AIDataScience: 'AI and Data Science',
+    yearHalf: 'Year half:',
+    first: '1st',
+    second: '2nd',
+    generateButton: 'Generate',
+  },
+  pt: {
+    generateSchedule: 'Gerar Grade de Horários',
+    professorsSchedule: 'Horário dos Professores',
+    buttonChatGPT: 'Gerar  grade de horários com ChatGPT',
+    computerScience: 'Ciência da Computação',
+    informationSystems: 'Sistemas de Informação',
+    AIDataScience: 'IA e Ciência de Dados',
+    yearHalf: 'Semestre:',
+    first: '1º',
+    second: '2º',
+    generateButton: 'Gerar'
+  }
+};
 
 function CoordinatorScreen() {
   const [isPopupVisible, setPopupVisible] = useState(false);

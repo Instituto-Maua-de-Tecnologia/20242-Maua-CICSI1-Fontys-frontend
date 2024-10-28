@@ -8,6 +8,38 @@ import {
   Check,
 } from "phosphor-react";
 
+const translations = {
+  en: {
+    scheduleTitle: 'Inform Availability',
+    observationsPlaceholder: 'Observations',
+    avaliableText: 'Available',
+    unavaliableText: 'Unavailable',
+    submitButton: 'Submit',
+    monday: 'Monday',
+    tuesday: 'Tuesday',
+    wednesday: 'Wednesday',
+    thursday: 'Thursday',
+    friday: 'Friday',
+    saturday: 'Saturday'
+  },
+  pt: {
+    scheduleTitle: 'Informe Disponibliadade',
+    observationsPlaceholder: 'Observações',
+    avaliableText: 'Disponível',
+    unavaliableText: 'Indisponível',
+    submitButton: 'Submeter',
+    monday: 'Segunda-feira',
+    tuesday: 'Terça-feira',
+    wednesday: 'Quarta-feira',
+    thursday: 'Quinta-feira',
+    friday: 'Sexta-feira',
+    saturday: 'Sábado'
+  }
+};
+
+
+
+
 const ScheduleTable: React.FC = () => {
   const [availability, setAvailability] = useState({
     mon: [],
@@ -100,12 +132,20 @@ const ScheduleTable: React.FC = () => {
             </tbody>
           </table>
         </div>
+        <div className="ml">
+          <h3 className="text-xl font-semibold mb-2">Select all applicable subjects</h3>
+          <div className="flex flex-col space-y-2">
+            {Array.from({ length: 8 }).map((_, i) => (
+              <label key={i} className="flex items-center space-x-2">
+                <input type="checkbox" className="form-checkbox" />
+                <span>Subject {i + 1}</span>
+              </label>
+            ))}
+          </div>
+        </div>
       </div>
       <div className="flex justify-between items-centermb-4 pl-4 pr-4">
-      <textarea placeholder="Observations" className="flex focus:outline-none text-xl w-[100%] h-24 p-2 rounded-lg bg-[#D9D9D9] align-top" rows={2} />
-      </div>
-      <div>
-        
+        <textarea placeholder="Observations" className="flex focus:outline-none text-xl w-[100%] h-24 p-2 rounded-lg bg-[#D9D9D9] align-top" rows={2} />
       </div>
     </div>
     );

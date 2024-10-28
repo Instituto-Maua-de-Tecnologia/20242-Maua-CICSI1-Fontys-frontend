@@ -2,6 +2,19 @@ import TranslationButtons from '../components/translationButtons';
 import BtnCoordinator from '../assets/btn-professor.png';
 import BtnCoordinator2 from '../assets/btn-professor2.png';
 
+
+const translations = {
+  en: {
+    professorIndex:'Hello, Name!',
+    informAvailability: 'Inform Availability/Subjects',
+    visualizeSchedule: 'Visualize Schedule'
+  },
+  pt: {
+    professorIndex:'Olá, Nome!',
+    informAvailability: 'Informar Disponibilidade/Matérias',
+    visualizeSchedule: 'Visualizar Horário'
+  }
+};
 export default function Professor() {
   return (
     <div className="absolute top-0 left-0 w-full h-full bg-light-gray flex flex-col justify-center items-center">
