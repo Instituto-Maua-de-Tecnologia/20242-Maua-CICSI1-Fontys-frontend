@@ -1,5 +1,6 @@
 import React, { useState, ChangeEvent } from 'react';
 import TranslationButtons from '../components/translationButtons';
+import { useLanguage } from '../components/languageProvider';
 import {
   ArrowCircleLeft,
   MagnifyingGlass,
@@ -15,6 +16,7 @@ const translations = {
     avaliableText: 'Available',
     unavaliableText: 'Unavailable',
     submitButton: 'Submit',
+    selectSubjects: 'Select all applicable subjects',
     monday: 'Monday',
     tuesday: 'Tuesday',
     wednesday: 'Wednesday',
@@ -28,6 +30,7 @@ const translations = {
     avaliableText: 'Disponível',
     unavaliableText: 'Indisponível',
     submitButton: 'Submeter',
+    selectSubjects:'Selecione todas matérias aplicáveis',
     monday: 'Segunda-feira',
     tuesday: 'Terça-feira',
     wednesday: 'Quarta-feira',
@@ -39,8 +42,10 @@ const translations = {
 
 
 
-
 const ScheduleTable: React.FC = () => {
+
+  const {currentLanguage} = useLanguage();
+
   const [availability, setAvailability] = useState({
     mon: [],
     tue: [0, 1, 2],
@@ -61,6 +66,8 @@ const ScheduleTable: React.FC = () => {
     "13h10 - 14h50", "15h00 - 16h40", "16h50 - 18h30", 
     "19h00 - 20h40", "20h50 - 22h30"
   ];
+
+  // review for translate
   const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
   const toggleAvailability = (day: string, index: number) => {
@@ -92,16 +99,16 @@ const ScheduleTable: React.FC = () => {
   return (
     <div className="p-5">
       <TranslationButtons/>
-      <h2 className="text-center text-3xl text-black mb-8">Inform Availability</h2>
+      <h2 className="text-center text-3xl text-black mb-8">{translations[currentLanguage].scheduleTitle}</h2>
       <div className="flex justify-between items-center mb-4 p-4 pb-0 pt-0">
         <div className="flex items-center space-x-4">
           <label className="flex items-center cursor-pointer">
             <input type="radio" name="availability"   value="available" checked={selectedAvailability === 'available'} onChange={handleAvailabilityChange} className="w-4 h-4 mr-2" />
-            <span>Available</span>
+            <span>{translations[currentLanguage].avaliableText}</span>
           </label>
           <label className="flex items-center cursor-pointer">
             <input type="radio" name="availability" value="unavailable" checked={selectedAvailability === 'unavailable'} onChange={handleAvailabilityChange} className="w-4 h-4  mr-2" />
-            <span>Unavailable</span>
+            <span>{translations[currentLanguage].unavaliableText}</span>
           </label>
         </div>
       </div>
@@ -133,7 +140,7 @@ const ScheduleTable: React.FC = () => {
           </table>
         </div>
         <div className="ml">
-          <h3 className="text-xl font-semibold mb-2">Select all applicable subjects</h3>
+          <h3 className="text-xl font-semibold mb-2">{translations[currentLanguage].selectSubjects}</h3>
           <div className="flex flex-col space-y-2">
             {Array.from({ length: 8 }).map((_, i) => (
               <label key={i} className="flex items-center space-x-2">
@@ -145,7 +152,7 @@ const ScheduleTable: React.FC = () => {
         </div>
       </div>
       <div className="flex justify-between items-centermb-4 pl-4 pr-4">
-        <textarea placeholder="Observations" className="flex focus:outline-none text-xl w-[100%] h-24 p-2 rounded-lg bg-[#D9D9D9] align-top" rows={2} />
+        <textarea placeholder={translations[currentLanguage].observationsPlaceholder} className="flex focus:outline-none text-xl w-[100%] h-24 p-2 rounded-lg bg-[#D9D9D9] align-top" rows={2} />
       </div>
     </div>
     );

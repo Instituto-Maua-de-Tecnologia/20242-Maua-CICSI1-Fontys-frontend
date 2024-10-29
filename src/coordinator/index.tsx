@@ -3,6 +3,7 @@ import TranslationButtons from '../components/translationButtons';
 import BtnCoordinator from '../assets/btn-professor.png';
 import BtnCoordinator2 from '../assets/btn-professor2.png';
 import LogoChat from '../assets/chatLogo.png';
+import { useLanguage } from '../components/languageProvider';
 
 const translations = {
   en: {
@@ -10,6 +11,7 @@ const translations = {
     professorsSchedule: 'Professor\'s Schedule',
     buttonChatGPT: 'Generate schedule with ChatGPT',
     computerScience: 'Computer Science',
+    course: 'Course',
     informationSystems: 'Information Systems',
     AIDataScience: 'AI and Data Science',
     yearHalf: 'Year half:',
@@ -22,6 +24,7 @@ const translations = {
     professorsSchedule: 'Horário dos Professores',
     buttonChatGPT: 'Gerar  grade de horários com ChatGPT',
     computerScience: 'Ciência da Computação',
+    course: 'Curso',
     informationSystems: 'Sistemas de Informação',
     AIDataScience: 'IA e Ciência de Dados',
     yearHalf: 'Semestre:',
@@ -31,7 +34,11 @@ const translations = {
   }
 };
 
+
 function CoordinatorScreen() {
+
+  const {currentLanguage} = useLanguage();
+
   const [isPopupVisible, setPopupVisible] = useState(false);
   const [selectedYearHalf, setSelectedYearHalf] = useState('');
 
@@ -57,9 +64,7 @@ function CoordinatorScreen() {
             onClick={handleGenerateScheduleClick}
           >
           <div className="absolute inset-0 rounded-[30px] flex justify-center items-center bg-black hover:bg-opacity-30 transition-all duration-300 opacity-0 hover:opacity-100">
-            <div className="text-center text-3xl text-white">
-              Generate Schedule
-            </div>
+          <h3 className="text-center text-2xl text-white">{translations[currentLanguage].generateSchedule}</h3>
           </div>
         </button>
 
@@ -69,9 +74,7 @@ function CoordinatorScreen() {
           style={{ backgroundImage: `url(${BtnCoordinator2})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
         >
         <div className="absolute inset-0 rounded-[30px] flex justify-center items-center bg-black hover:bg-opacity-30 transition-all duration-300 opacity-0 hover:opacity-100">
-          <div className="text-center text-3xl text-white">
-            Professor's Schedule
-          </div>
+        <h3 className="text-center text-2xl text-white">{translations[currentLanguage].professorsSchedule}</h3>
           </div>
         </button>
       </div>
@@ -94,7 +97,7 @@ function CoordinatorScreen() {
         {/* icon Chat GPT */}
       </div>
       <button className="w-150 h-16 bg-[#000066] text-white rounded-[10px] shadow-md hover:shadow-lg flex items-center justify-center space-x-2 transition-all duration-300 transform hover:scale-110 px-6 py-2 " onClick={handleGenerateScheduleClick}>
-        <span className="text-xl">Generate schedule with ChatGPT</span>
+        <span className="text-xl">{translations[currentLanguage].buttonChatGPT}</span>
         <img src={LogoChat} alt="ChatGPT Logo" className="w-10" />
         
       </button>
@@ -108,17 +111,17 @@ function CoordinatorScreen() {
             >
               &times;
             </button>
-            <h2 className="text-center text-2xl mb-4">Generate Schedule</h2>
+            <h2 className="text-center text-2xl mb-4">{translations[currentLanguage].generateButton}</h2>
             <div className="mb-4 flex items-center">
-              <label className="block text-lg mb-0 mr-4">Course:</label>
+              <label className="block text-lg mb-0 mr-4">{translations[currentLanguage].course}</label>
               <select className="w-48 p-2 border rounded-lg">
-                <option value="course1">Computer Science</option>
-                <option value="course2">Information Systems</option>
-                <option value="course3">AI and Data Science</option>
+                <option value="course1">{translations[currentLanguage].computerScience}</option>
+                <option value="course2">{translations[currentLanguage].informationSystems}</option>
+                <option value="course3">{translations[currentLanguage].AIDataScience}</option>
               </select>
             </div>
             <div className="mb-4 flex items-center">
-              <label className="block text-lg mb-0 mr-4">Year half:</label>
+              <label className="block text-lg mb-0 mr-4">{translations[currentLanguage].yearHalf}</label>
               <div className="flex space-x-4">
                 <label className="flex items-center space-x-2">
                   <input
@@ -129,7 +132,7 @@ function CoordinatorScreen() {
                     onChange={handleYearHalfChange}
                     className="form-radio bg-[#000066]"
                   />
-                  <span>1st</span>
+                  <span>{translations[currentLanguage].first}</span>
                 </label>
                 <label className="flex items-center space-x-2">
                   <input
@@ -140,13 +143,13 @@ function CoordinatorScreen() {
                     onChange={handleYearHalfChange}
                     className="form-radio bg-[#000066]"
                   />
-                  <span>2nd</span>
+                  <span>{translations[currentLanguage].second}</span>
                 </label>
               </div>
             </div>
             <div className="flex justify-center">
               <button className="w-32 h-8 bg-[#000066] text-white rounded-[10px] shadow-md hover:shadow-lg">
-                <div className="text-center text-x2">Generate</div>
+                <div className="text-center text-x2">{translations[currentLanguage].generateButton}</div>
               </button>
             </div>
           </div>
