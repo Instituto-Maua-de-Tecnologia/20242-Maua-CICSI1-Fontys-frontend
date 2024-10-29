@@ -89,6 +89,13 @@ const ScheduleTable: React.FC = () => {
     { name: "Data Structures"},
   ];
 
+  const styles = {
+    style: {
+      "background-color": "blue",
+      "color": "white"
+    }
+  }
+
   return (
     <div className="p-5">
       <TranslationButtons/>
@@ -105,50 +112,63 @@ const ScheduleTable: React.FC = () => {
           </label>
         </div>
       </div>
+
       <div className="flex">
-        <div className="w-full md:w-1/2 p-4 pt-0">
-          <table className="table-auto border-collapse border border-gray-500 rounded-lg w-full">
+      <div className="p-5">
+      <h2 className="text-2xl font-semibold mb-4">Inform Availability</h2>
+      <div className="flex justify-between">
+        <div className="overflow-hidden rounded-lg border border-gray-500">
+          <table className="table-auto border-collapse">
             <thead>
               <tr>
                 <th className="border border-gray-500 p-2"></th>
                 {days.map((day, index) => (
-                  <th key={index} className="border border-gray-500 p-2">{day}</th>
+                  <th style={{"width": 90}} key={index} className="border border-gray-500 p-2">{day}</th>
                 ))}
               </tr>
             </thead>
             <tbody>
               {times.map((time, timeIndex) => (
                 <tr key={timeIndex}>
-                  <td className="border border-gray-500 p-2">{time}</td>
+                  <td className="border border border-gray-500 p-2">{time}</td>
                   {days.map((day, dayIndex) => (
                     <td
                       key={dayIndex}
-                      className={`border border-gray-500 p-2 cursor-pointer ${availableCells[day]?.includes(timeIndex) ? 'bg-green-500' : availability[day]?.includes(timeIndex) ? 'bg-red-500' : 'bg-white'} hover:bg-blue-200`}
-                      onClick={() => toggleAvailability(day, timeIndex)}
-                    ></td>
+                      className={`border border-gray-500 p-2 cursor-pointer ${availability[day.toLowerCase()]?.includes(timeIndex) ? 'bg-blue-500' : 'bg-white'} hover:bg-blue-200`}
+                      onClick={() => toggleAvailability(day.toLowerCase(), timeIndex)}
+                    >
+                    </td>
                   ))}
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
+      </div>
+    </div>
         <div className="ml">
           <h3 className="text-xl font-semibold mb-2">Select all applicable subjects</h3>
           <div className="flex flex-col space-y-2">
-            {Array.from({ length: 8 }).map((_, i) => (
+            {subjects.map((value, i) => (
               <label key={i} className="flex items-center space-x-2">
                 <input type="checkbox" className="form-checkbox" />
-                <span>Subject {i + 1}</span>
+                <span>{value.name}</span> 
               </label>
             ))}
           </div>
         </div>
       </div>
       <div className="flex justify-between items-centermb-4 pl-4 pr-4">
-        <textarea placeholder="Observations" className="flex focus:outline-none text-xl w-[100%] h-24 p-2 rounded-lg bg-[#D9D9D9] align-top" rows={2} />
+        <textarea placeholder="Observations" className="flex focus:outline-none text-xl w-[100%] h-24 p-2 rounded-lg bg-[#D9D9D9] align-top" rows={2} style={{"resize": 'none'}} />
       </div>
+      
+      <div className='flex justify-end'>
+          <button className="p-3 rounded-lg me-5 mt-2" style={styles.style}>Send</button>
+      </div>
+
     </div>
-    );
+    
+  );
 };
 
 export default ScheduleTable;
