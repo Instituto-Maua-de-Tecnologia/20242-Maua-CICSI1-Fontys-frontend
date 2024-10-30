@@ -109,6 +109,9 @@ const ScheduleTable: React.FC = () => {
 
   return (
     <div className="p-5">
+      <button>
+        <ArrowCircleLeft color="#000066" size={48} className="fixed left-3 top-" />
+      </button>
       <TranslationButtons/>
       <h2 className="text-center text-3xl text-black mb-8">{translations[currentLanguage].scheduleTitle}</h2>
       <div className="flex justify-between items-center mb-4 p-4 pb-0 pt-0">
