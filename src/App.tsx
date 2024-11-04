@@ -5,7 +5,6 @@ import Professor from './professor';
 import ScheduleTable from './schedule';
 import NotFound from './screens/notFound';
 import { LanguageProvider } from './components/languageProvider';
-import AccountCreation from "./AccountCreation";
 
 export function App() { 
   return (
