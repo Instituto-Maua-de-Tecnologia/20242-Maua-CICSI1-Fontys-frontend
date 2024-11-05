@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import Image_background_login from '../assets/Image_background_login.png';
-import logo_maua from '../assets/logo_maua.png';
+import Image_background_login from '@/assets/Image_background_login.png';
+import logo_maua from '@/assets/logo_maua.png';
 import { InputText } from 'primereact/inputtext';
 import { Eye, EyeSlash } from 'phosphor-react';
-import { useLanguage } from '../components/languageProvider';
-import TranslationButtons from '../components/translationButtons';
+import { useLanguage } from '@/components/languageProvider';
+import TranslationButtons from '@/components/translationButtons';
 import { useNavigate } from 'react-router-dom';
 
 const translations = {
