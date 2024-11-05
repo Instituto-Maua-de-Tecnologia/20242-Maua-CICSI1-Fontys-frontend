@@ -124,7 +124,6 @@ import { useLanguage } from '../languageProvider';
                                     <td className="border-2 border-black text-center">{row.time}</td>
                                     <td className={`border-2 border-black p-2 text-center whitespace-pre-line ${getCellStyle(row.monday)? getCellStyle(row.monday) : "hover:bg-gray-300"}`}>{row.monday}</td>
                                     <td className={`border-2 border-black p-2 text-center whitespace-pre-line ${getCellStyle(row.tuesday)? getCellStyle(row.tuesday) : "hover:bg-gray-300"}`}>{row.tuesday}</td>
-                                    {/* <td className={`border-2 border-black p-2 text-center whitespace-pre-line ${getCellStyle(row.tuesday)}`}>{row.tuesday}</td> */}
                                     <td className={`border-2 border-black p-2 text-center ${getCellStyle(row.wednesday)}`}>{row.wednesday}</td>
                                     <td className={`border-2 border-black p-2 text-center ${getCellStyle(row.thursday)}`}>{row.thursday}</td>
                                     <td className={`border-2 border-black p-8 text-center ${getCellStyle(row.friday)}`}>{row.friday}</td>
