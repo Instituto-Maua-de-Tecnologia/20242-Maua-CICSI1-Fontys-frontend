@@ -6,10 +6,10 @@ export default function TranslationButtons() {
   const { currentLanguage, setCurrentLanguage } = useLanguage();
 
   return (
-    <div className="">
+    <div>
       <div className='absolute top-5 right-5'>
         <button
-          className={`transition duration-200 transform hover:scale-110 ${currentLanguage === 'pt' ? '' : 'opacity-50 shadow-lg'}`}
+          className={`rounded-full transition duration-200 transform hover:scale-110 ${currentLanguage === 'pt' ? '' : 'opacity-50 shadow-lg'}`}
           onClick={() => {
             setCurrentLanguage('pt');
             localStorage.setItem("lang", 'pt');
@@ -21,7 +21,7 @@ export default function TranslationButtons() {
       </div>
       <div>
         <button
-          className={`absolute top-5 right-20 transition duration-200 transform hover:scale-110 ${currentLanguage === 'en' ? '' : 'opacity-50 shadow-lg'}`}
+          className={`rounded-full absolute top-5 right-20 transition duration-200 transform hover:scale-110 ${currentLanguage === 'en' ? '' : 'opacity-50 shadow-lg'}`}
           onClick={() => {
             setCurrentLanguage('en')
             localStorage.setItem("lang",'en');
