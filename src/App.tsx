@@ -5,6 +5,7 @@ import Professor from './professor';
 import ScheduleTable from './schedule';
 import NotFound from './screens/notFound';
 import { LanguageProvider } from './components/languageProvider';
+import ProfessorRegistration from './professorRegistration';
 
 export function App() { 
   return (
@@ -15,6 +16,7 @@ export function App() {
           <Route path='professor' element={<Professor/>}/>
           <Route path="professors_schedule" element={<ProfessorSchedule />} />
           <Route path="schedule" element={<ScheduleTable/>}/>
+          <Route path="professor_registration" element={<ProfessorRegistration/>}/>
           <Route path="*" element={<NotFound/>}/>
         </Routes>
       </BrowserRouter>
