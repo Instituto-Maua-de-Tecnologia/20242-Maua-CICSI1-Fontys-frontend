@@ -58,16 +58,14 @@ import { useLanguage } from '../languageProvider';
             }
         }
 
-       
-
         // Função auxiliar para definir as classes de estilo
         const getCellStyle = (text: string) => {
             if (text.includes("Rodrigo Bossini")) {
-                return 'bg-[#2B49A3] text-white';
+                return 'bg-[#2B49A3] text-white border-dash';
             } else if (text.includes("Guardado")) {
-                return 'bg-gray-500 text-white';
+                return 'bg-gray-500 text-white border-dash';
             } else if (text.includes("Rudolf")) {
-                return 'bg-[#857A77] text-white';
+                return 'bg-[#857A77] text-white border-dash';
             }
             return '';
         };
@@ -83,8 +81,6 @@ import { useLanguage } from '../languageProvider';
 
         // Seleciona o cronograma baseado no semestre
         const currentSchedule = schedules[selectedSemester];
-
-
 
         return (
             <div className="container mx-auto px-4 py-6">
@@ -122,12 +118,24 @@ import { useLanguage } from '../languageProvider';
                             {currentSchedule.map((row, index) => (
                                 <tr key={index}>
                                     <td className="border-2 border-black text-center">{row.time}</td>
-                                    <td className={`border-2 border-black p-2 text-center whitespace-pre-line ${getCellStyle(row.monday)? getCellStyle(row.monday) : "hover:bg-gray-300"}`}>{row.monday}</td>
-                                    <td className={`border-2 border-black p-2 text-center whitespace-pre-line ${getCellStyle(row.tuesday)? getCellStyle(row.tuesday) : "hover:bg-gray-300"}`}>{row.tuesday}</td>
-                                    <td className={`border-2 border-black p-2 text-center ${getCellStyle(row.wednesday)}`}>{row.wednesday}</td>
-                                    <td className={`border-2 border-black p-2 text-center ${getCellStyle(row.thursday)}`}>{row.thursday}</td>
-                                    <td className={`border-2 border-black p-8 text-center ${getCellStyle(row.friday)}`}>{row.friday}</td>
-                                    <td className={`border-2 border-black p-2 text-center ${getCellStyle(row.saturday)}`}>{row.saturday}</td>
+                                    <td
+                                        role="button"
+                                        tabIndex={1}
+                                        className={`border-2 border-black p-2 text-center whitespace-pre-line ${getCellStyle(row.monday) ? getCellStyle(row.monday) : "hover:bg-gray-300"}`}
+                                    >
+                                        {row.monday}
+                                    </td>
+                                    <td 
+                                        role="button"
+                                        tabIndex={1}
+                                        className={`border-2 border-black p-2 text-center whitespace-pre-line ${getCellStyle(row.tuesday)? getCellStyle(row.tuesday) : "hover:bg-gray-300"}`}
+                                    >
+                                        {row.tuesday}
+                                    </td>
+                                    <td className={`border-2 border-black p-2 text-center whitespace-pre-line ${getCellStyle(row.wednesday)}`}>{row.wednesday}</td>
+                                    <td className={`border-2 border-black p-2 text-center whitespace-pre-line ${getCellStyle(row.thursday)}`}>{row.thursday}</td>
+                                    <td className={`border-2 border-black p-8 text-center whitespace-pre-line ${getCellStyle(row.friday)}`}>{row.friday}</td>
+                                    <td className={`border-2 border-black p-2 text-center whitespace-pre-line ${getCellStyle(row.saturday)}`}>{row.saturday}</td>
                                 </tr>
                             ))}
                         </tbody>
