@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, version } from "react";
 import { useLanguage } from "../components/languageProvider";
 import TranslationButtons from "../components/translationButtons";
 import { Check, Download, Question, XCircle } from "phosphor-react";
@@ -7,6 +7,18 @@ export default function ProfessorRegistration() {
   const { currentLanguage } = useLanguage();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedIndexes, setSelectedIndexes] = useState<number[]>([]);
+  const [showCheck, setShowCheck] = useState(false);
+
+  const handleButtonClick = () => {
+    setShowCheck(prevShowCheck => !prevShowCheck);
+    if (!showCheck) {
+      // Seleciona todos os índices
+      setSelectedIndexes(names.map((_, index) => index));
+    } else {
+      // Desmarca todos os índices
+      setSelectedIndexes([]);
+    }
+  };
 
   const handleCheckboxToggle = (index: number) => {
     setSelectedIndexes((prevSelected) => {
@@ -31,7 +43,8 @@ export default function ProfessorRegistration() {
       sendFileCSV: '.csv',
       sendFilePart2: 'file',
       titleModal: 'Verify Professors',
-      buttonModal: "Confirm"
+      buttonModal: "Confirm",
+      verifiedAll: "Verified All"
     },
     pt: {
       title: 'Cadastro de Professores',
@@ -41,7 +54,8 @@ export default function ProfessorRegistration() {
       sendFileCSV: '.csv',
       sendFilePart2: '',
       titleModal: 'Professores Verificados',
-      buttonModal: "Confirmar"
+      buttonModal: "Confirmar",
+      verifiedAll: "Marcar Todos"
     }
   };
 
@@ -104,14 +118,23 @@ export default function ProfessorRegistration() {
                 ))}
               </div>
             </div>
-            <div className="flex justify-center items-center py-5">
-              <button
-                className="bg-[#000066] text-white w-44 h-10 rounded-xl text-2xl text-center transition duration-100 transform hover:scale-105"
-                
-              >
-                {translations[currentLanguage].buttonModal}
-              </button>
+            <div className="flex justify-center items-center py-5 absolute w-[75%]">
+              <div className="flex items-center mx-auto">
+                <button
+                  className="bg-[#000066] text-white w-44 h-10 rounded-xl text-2xl text-center transition duration-100 transform hover:scale-105"
+                >
+                  {translations[currentLanguage].buttonModal}
+                </button>
+
+                <button className="ml-10 flex flex-row" onClick={handleButtonClick}>
+                  <div className="rounded-xl border-2 border-[#000066] w-10 h-10 flex items-center justify-center">
+                    {showCheck && <Check size={30} color="#000066" />}
+                  </div>
+                  <p className="pl-4 text-2xl py-1">{translations[currentLanguage].verifiedAll}</p>
+                </button>
+              </div>
             </div>
+
           </div>
         </div>
       )}
