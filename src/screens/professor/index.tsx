@@ -1,6 +1,6 @@
-import TranslationButtons from '../components/translationButtons';
-import BtnCoordinator from '../assets/btn-professor.png';
-import BtnCoordinator2 from '../assets/btn-professor2.png';
+import TranslationButtons from '@/components/translationButtons';
+import BtnCoordinator from '@/assets/btn-professor.png';
+import BtnCoordinator2 from '@/assets/btn-professor2.png';
 
 export default function Professor() {
   return (

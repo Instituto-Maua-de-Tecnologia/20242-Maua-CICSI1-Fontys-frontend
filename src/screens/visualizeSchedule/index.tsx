@@ -1,8 +1,8 @@
 import { ArrowCircleLeft } from "phosphor-react";
 import { Dropdown } from "primereact/dropdown";
 import { useState } from "react";
-import TableVisualizeSchedule from "../components/tableVisualizeSchedule";
-import { useLanguage } from '../components/languageProvider';
+import TableVisualizeSchedule from "@/components/tableVisualizeSchedule";
+import { useLanguage } from '@/components/languageProvider';
 
 export default function VisualizeSchedule() {
     const translations = {
