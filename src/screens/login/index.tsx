@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Image_background_login from '@/assets/Image_background_login.png';
 import logo_maua from '@/assets/logo_maua.png';
 import { InputText } from 'primereact/inputtext';
@@ -37,6 +38,7 @@ export default function Login() {
   const [hasError, setHasError] = useState(false);
   const [isMsalInitialized, setMsalInitialized] = useState(false); // Add state to track MSAL initialization
   const { currentLanguage } = useLanguage();
+  const navigate = useNavigate();
 
   // Initialize MSAL on component mount
   useEffect(() => {
@@ -59,6 +61,7 @@ export default function Login() {
       setEmail('');
       setPassword('');
       setHasError(false);
+      navigate ('/professor')
     }
   };
 
@@ -79,6 +82,7 @@ export default function Login() {
 
         // Provide user feedback, such as a message or a console confirmation
         alert(`Welcome, ${loginResponse.account.username}! You are now logged in.`);
+        navigate ('/professor')
 
       } else {
         console.log("Microsoft login completed but no account information was returned.");
