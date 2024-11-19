@@ -7,7 +7,8 @@ interface ProfilePictureProps {
 }
 
 export const ProfilePicture: React.FC<ProfilePictureProps> = ({ size = 40, className = '' }) => {
-    const profilePictureUrl = useProfileStore((state) => state.profilePictureUrl);
+    //const profilePictureUrl = useProfileStore((state) => state.profilePictureUrl);
+    const profilePictureUrl = useProfileStore.getState().profilePictureUrl;
 
     if (!profilePictureUrl) {
         return (
@@ -34,7 +35,13 @@ export const ProfilePicture: React.FC<ProfilePictureProps> = ({ size = 40, class
             src={profilePictureUrl}
             alt="Profile picture"
             className={`rounded-full object-cover ${className}`}
-            style={{ width: `${size}px`, height: `${size}px` }}
+            style={{width: `${size}px`, height: `${size}px`}}
+            onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+                console.error('Error loading image:', e);
+                const imgElement = e.currentTarget;
+                imgElement.onerror = null; // Prevent infinite loop
+                imgElement.src = '/path/to/fallback/image.jpg'; // Set a fallback image
+            }}
         />
     );
 };
