@@ -114,6 +114,7 @@ export default function Login() {
 
         const accessToken: string = tokenResponse.accessToken;
         const profilePictureUrl = await getProfilePicture(accessToken);
+        msalInstance.setActiveAccount(loginResponse.account);
         setProfilePictureUrl(profilePictureUrl);
 
         console.log("Microsoft login successful:", loginResponse);
