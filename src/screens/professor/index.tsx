@@ -9,7 +9,6 @@ export default function Professor() {
 
   useEffect(() => {
     const currentAccount = msalInstance.getActiveAccount();
-    console.log(currentAccount);
     if (currentAccount && currentAccount.idTokenClaims) {
       setName(currentAccount.idTokenClaims.name || null);
     }

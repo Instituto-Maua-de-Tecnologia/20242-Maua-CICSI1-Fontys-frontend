@@ -117,12 +117,7 @@ export default function Login() {
         msalInstance.setActiveAccount(loginResponse.account);
         setProfilePictureUrl(profilePictureUrl);
 
-        console.log("Microsoft login successful:", loginResponse);
-        console.log(`Logged in as: ${loginResponse.account.username}`);
-
-        // Provide user feedback, such as a message or a console confirmation
-        alert(`Welcome, ${loginResponse.account.username}! You are now logged in.`);
-        navigate ('/professor')
+        navigate('/professor');
 
         const response = await fetch("http://localhost:8000/auth/microsoft", {
           method: "POST",
