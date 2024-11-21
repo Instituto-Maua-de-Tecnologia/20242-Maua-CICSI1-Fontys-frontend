@@ -8,6 +8,7 @@ import { LanguageProvider } from './components/languageProvider';
 import ProfessorRegistration from './professorRegistration';
 import CoordinatorScreen from '@/screens/coordinator';
 import VisualizeSchedule from '@/screens/visualizeSchedule';
+import {ProfilePicture} from "@/components/profile/ProfilePicture.tsx";
 
 export function App() { 
   return (
@@ -15,6 +16,7 @@ export function App() {
       <BrowserRouter>
         <Routes>
           <Route index element={<Login />} />
+          <Route path='profilepicture' element={<ProfilePicture size={100} className={"rounded-full border-4 border-blue-500 shadow-lg"} />} />
           <Route path='professor' element={<Professor/>}/>
           <Route path="professors_schedule" element={<ProfessorSchedule />} />
           <Route path="schedule" element={<ScheduleTable/>}/>

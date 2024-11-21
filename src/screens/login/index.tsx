@@ -7,6 +7,7 @@ import { Eye, EyeSlash } from 'phosphor-react';
 import { useLanguage } from '@/components/languageProvider';
 import TranslationButtons from '@/components/translationButtons';
 import { msalInstance, initializeMsal } from "../../api/auth/msalConfig.tsx"; // Import initializeMsal function
+import { useProfileStore } from '@/stores/profileStore';
 
 const translations = {
   en: {
@@ -37,6 +38,7 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [hasError, setHasError] = useState(false);
   const [isMsalInitialized, setMsalInitialized] = useState(false); // Add state to track MSAL initialization
+  const setProfilePictureUrl = useProfileStore((state) => state.setProfilePictureUrl);
   const { currentLanguage } = useLanguage();
   const navigate = useNavigate();
 
@@ -65,6 +67,34 @@ export default function Login() {
     }
   };
 
+  const getProfilePicture = async (accessToken: string): Promise<string | null> => {
+    try {
+      const response = await fetch(
+          "https://graph.microsoft.com/v1.0/me/photo/$value",
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+      );
+
+      if (response.ok) {
+        const blob = await response.blob();
+        return new Promise((resolve) => {
+          const reader = new FileReader();
+          reader.onloadend = () => resolve(reader.result as string);
+          reader.readAsDataURL(blob);
+        });
+      } else {
+        console.log("Failed to fetch profile picture");
+        return null;
+      }
+    } catch (error) {
+      console.error("Error fetching profile picture:", error);
+      return null;
+    }
+  };
+
   const handleMicrosoftLogin = async () => {
     if (!isMsalInitialized) {
       console.warn("MSAL is not initialized. Please wait and try again.");
@@ -73,10 +103,19 @@ export default function Login() {
 
     try {
       const loginResponse = await msalInstance.loginPopup({
-        scopes: ["openid", "profile", "email"],
+        scopes: ["openid", "profile", "email", "User.Read"],
       });
 
       if (loginResponse && loginResponse.account) {
+        const tokenResponse = await msalInstance.acquireTokenSilent({
+          scopes: ["User.Read"],
+          account: loginResponse.account,
+        });
+
+        const accessToken: string = tokenResponse.accessToken;
+        const profilePictureUrl = await getProfilePicture(accessToken);
+        setProfilePictureUrl(profilePictureUrl);
+
         console.log("Microsoft login successful:", loginResponse);
         console.log(`Logged in as: ${loginResponse.account.username}`);
 
@@ -84,14 +123,30 @@ export default function Login() {
         alert(`Welcome, ${loginResponse.account.username}! You are now logged in.`);
         navigate ('/professor')
 
-      } else {
+        const response = await fetch("http://localhost:8000/auth/microsoft", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${loginResponse.idToken}`  // Include ID token
+          },
+          body: JSON.stringify({ email: loginResponse.account.username })
+        });
+
+        if (response.ok) {
+          console.log("User linked to internal account successfully.");
+          // Redirect user or update UI to show successful authentication
+        } else {
+          console.error("Failed to link Microsoft account to internal system.");
+        }
+      }
+
+      else {
         console.log("Microsoft login completed but no account information was returned.");
       }
     } catch (error) {
       console.error("Microsoft login failed:", error);
     }
   };
-
 
   return (
       <div className="h-screen w-full overflow-hidden relative">
@@ -173,3 +228,5 @@ export default function Login() {
       </div>
   );
 }
+
+
