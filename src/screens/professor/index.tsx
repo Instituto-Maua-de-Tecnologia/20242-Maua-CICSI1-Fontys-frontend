@@ -3,9 +3,11 @@ import BtnCoordinator from '@/assets/btn-professor.png';
 import BtnCoordinator2 from '@/assets/btn-professor2.png';
 import { msalInstance } from '@/api/auth/msalConfig';
 import { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 
 export default function Professor() {
   const [name, setName] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const currentAccount = msalInstance.getActiveAccount();
@@ -13,6 +15,11 @@ export default function Professor() {
       setName(currentAccount.idTokenClaims.name || null);
     }
   }, []);
+
+  const handleVisualizeScheduleClick = () => {
+    navigate('/visualize_schedule');
+  };
+
 
   return (
       <div className="absolute top-0 left-0 w-full h-full bg-light-gray flex flex-col justify-center items-center">
@@ -33,6 +40,7 @@ export default function Professor() {
           <button
               className="w-80 h-64 relative rounded-[30px] shadow-md  transition-all duration-300 transform hover:scale-110"
               style={{ backgroundImage: `url(${BtnCoordinator2})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+              onClick={handleVisualizeScheduleClick}
           >
             <div className="absolute inset-0 rounded-[30px] flex justify-center items-center bg-black hover:bg-opacity-30 transition-all duration-300 opacity-0 hover:opacity-100">
               <div className="text-center text-3xl text-white">

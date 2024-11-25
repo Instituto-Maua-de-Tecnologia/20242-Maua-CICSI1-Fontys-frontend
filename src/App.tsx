@@ -9,6 +9,7 @@ import ProfessorRegistration from './professorRegistration';
 import CoordinatorScreen from '@/screens/coordinator';
 import VisualizeSchedule from '@/screens/visualizeSchedule';
 import {ProfilePicture} from "@/components/profile/ProfilePicture.tsx";
+import ProfilePage from "@/screens/profilePage";
 
 export function App() { 
   return (
@@ -22,7 +23,8 @@ export function App() {
           <Route path="schedule" element={<ScheduleTable/>}/>
           <Route path="professor_registration" element={<ProfessorRegistration/>}/>
           <Route path="coordinator" element={<CoordinatorScreen/>}/>
-          <Route path="vizualize_schedule" element={<VisualizeSchedule/>}/>
+          <Route path="visualize_schedule" element={<VisualizeSchedule/>}/>
+          <Route path="profile" element={<ProfilePage/>}/>
           <Route path="*" element={<NotFound/>}/>
         </Routes>
       </BrowserRouter>
