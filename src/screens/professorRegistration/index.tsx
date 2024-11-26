@@ -1,6 +1,6 @@
-import { useState, version } from "react";
-import { useLanguage } from "../components/languageProvider";
-import TranslationButtons from "../components/translationButtons";
+import { useState } from "react";
+import { useLanguage } from "@/components/languageProvider";
+import TranslationButtons from "@/components/translationButtons";
 import { Check, Download, Question, XCircle } from "phosphor-react";
 
 export default function ProfessorRegistration() {
