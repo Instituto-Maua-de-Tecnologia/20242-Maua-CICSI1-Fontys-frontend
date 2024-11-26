@@ -1,6 +1,6 @@
 import React, { useState, ChangeEvent } from 'react';
-import TranslationButtons from '../components/translationButtons';
-import { useLanguage } from '../components/languageProvider';
+import TranslationButtons from '@/components/translationButtons';
+import { useLanguage } from '@/components/languageProvider';
 import {
   ArrowCircleLeft,
   MagnifyingGlass,

@@ -72,7 +72,7 @@ export default function ProfessorSchedule() {
 
       {/* Search bar */}
       <div className="mt-6 flex items-center w-[80vw]">
-        <div className="w-[50vw] flex flex-row items-center justify-between h-12 px-4 py-2 border-2 border-blue rounded-xl bg-white">
+        <div className="w-[50vw] flex flex-row items-center justify-between h-12 px-4 py-2 border-2 border-Blue rounded-xl bg-white">
           <input
             type="text"
             placeholder="Search"
@@ -85,7 +85,7 @@ export default function ProfessorSchedule() {
 
         <div className="flex flex-row items-center ml-10">
           <button className="flex items-center" onClick={handleShowAllChange}>
-            <div className={`rounded-xl border-2 border-blue w-10 h-10 flex items-center justify-center`}>
+            <div className={`rounded-xl border-2 border-Blue w-10 h-10 flex items-center justify-center`}>
               {showAllChecked && <Check color="#000066" size={24} />}
             </div>
             <p className="text-2xl pl-3 whitespace-nowrap">Show all sent</p>
@@ -93,7 +93,7 @@ export default function ProfessorSchedule() {
         </div>
         <div className="flex flex-row items-center ml-10">
           <button className="flex items-center" onClick={handleShowUnsentChange}>
-            <div className={`rounded-xl border-2 border-blue w-10 h-10 flex items-center justify-center`}>
+            <div className={`rounded-xl border-2 border-Blue w-10 h-10 flex items-center justify-center`}>
               {showUnsentChecked && <Check color="#000066" size={24} />}
             </div>
             <p className="text-2xl pl-3 whitespace-nowrap">Show unsent</p>
@@ -112,15 +112,15 @@ export default function ProfessorSchedule() {
               disabled={user.status === "unsent"}
             >
               <div className="flex items-center">
-                <UserCircle size={48} className="mr-3 text-blue" />
+                <UserCircle size={48} className="mr-3 text-Blue" />
                 <p className="text-xl">{user.name}</p>
               </div>
               <div className="flex items-center">
                 {(user.status === "verified") && (
-                  <Check size={32} className="text-blue" />
+                  <Check size={32} className="text-Blue" />
                 )}
                 {(user.status === "sent" || user.status === "verified") && (
-                  <MagnifyingGlassPlus size={32} className="text-blue" />
+                  <MagnifyingGlassPlus size={32} className="text-Blue" />
                 )}
               </div>
             </button>

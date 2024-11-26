@@ -1,6 +1,6 @@
 import React, { useState, ChangeEvent } from 'react';
-import TranslationButtons from '../components/translationButtons';
-import { useLanguage } from '../components/languageProvider';
+import TranslationButtons from '@/components/translationButtons';
+import { useLanguage } from '@/components/languageProvider';
 import {
   ArrowCircleLeft,
   MagnifyingGlass,
@@ -44,7 +44,7 @@ const translations = {
 const ProfessorAvaliability: React.FC = () => {
 
     const {currentLanguage} = useLanguage();
-  
+
     const [availability, setAvailability] = useState({
       mon: [],
       tue: [0, 1, 2],
@@ -55,20 +55,20 @@ const ProfessorAvaliability: React.FC = () => {
     });
     const [selectedAvailability, setSelectedAvailability] = useState('available');
     const [availableCells, setAvailableCells] = useState<{ [key: string]: number[] }>({});
-  
+
     const handleAvailabilityChange = (event: ChangeEvent<HTMLInputElement>) => {
       setSelectedAvailability(event.target.value);
     };
-  
+
     const times = [
-      "7h40 - 9h20", "9h30 - 11h10", "11h20 - 13h00", 
-      "13h10 - 14h50", "15h00 - 16h40", "16h50 - 18h30", 
+      "7h40 - 9h20", "9h30 - 11h10", "11h20 - 13h00",
+      "13h10 - 14h50", "15h00 - 16h40", "16h50 - 18h30",
       "19h00 - 20h40", "20h50 - 22h30"
     ];
-  
+
     // review for translate
     const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-  
+
     const toggleAvailability = (day: string, index: number) => {
       if (selectedAvailability === 'available') {
         setAvailableCells(prev => ({
@@ -86,24 +86,24 @@ const ProfessorAvaliability: React.FC = () => {
         }));
       }
     };
-  
-  
+
+
     // review for translate
-  
+
     const subjects = [
       { name: "Programming Logic" },
       { name: "Linear algebra and analytical geometry"},
       { name: "Agile Development" },
       { name: "Data Structures"},
     ];
-  
+
     const styles = {
       style: {
         "background-color": "#000066",
         "color": "white"
       }
     }
-  
+
     return (
       <div className="p-5">
         <button>
@@ -123,7 +123,7 @@ const ProfessorAvaliability: React.FC = () => {
             </label>
           </div>
         </div>
-  
+
         <div className="flex">
         <div className="p-5">
         <div className="flex justify-between">
@@ -144,7 +144,7 @@ const ProfessorAvaliability: React.FC = () => {
                     {days.map((day, dayIndex) => (
                       <td
                         key={dayIndex}
-                        className={`border border-gray-500 p-2 cursor-pointer ${availableCells[day]?.includes(timeIndex) ? 'bg-[#2B49A3]' : availability[day]?.includes(timeIndex) ? 'bg-[#CC0000]' : 'bg-white'} hover:bg-blue-200`}
+                        className={`border border-gray-500 p-2 cursor-pointer ${availableCells[day]?.includes(timeIndex) ? 'bg-[#2B49A3]' : availability[day]?.includes(timeIndex) ? 'bg-[#CC0000]' : 'bg-white'} hover:bg-Blue-200`}
                         onClick={() => toggleAvailability(day, timeIndex)}
                       >
                       </td>
@@ -162,7 +162,7 @@ const ProfessorAvaliability: React.FC = () => {
           {subjects.map((value, i) => (
             <label key={i} className="flex items-center space-x-2">
               <input type="checkbox" className="form-checkbox w-6 h-6"/>
-              <span className="text-lg">{value.name}</span> 
+              <span className="text-lg">{value.name}</span>
             </label>
           ))}
         </div>
@@ -170,7 +170,7 @@ const ProfessorAvaliability: React.FC = () => {
       </div>
       <div className="flex justify-between items-centermb-4 pl-4 pr-4">
         <textarea placeholder={translations[currentLanguage].observationsPlaceholder} className="flex focus:outline-none text-xl w-[100%] h-24 p-2 rounded-lg bg-[#D9D9D9] align-top" rows={2} style={{"resize": 'none'}}/>
-      </div>  
+      </div>
       <div className='flex justify-end'>
           <button className="p-3 rounded-lg me-5 mt-2" style={styles.style}>{translations[currentLanguage].buttonUpdate}</button>
       </div>

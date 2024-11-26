@@ -1,9 +1,9 @@
 import React, { useState, ChangeEvent } from 'react';
-import TranslationButtons from '../components/translationButtons';
-import BtnCoordinator from '../assets/btn-professor.png';
-import BtnCoordinator2 from '../assets/btn-professor2.png';
-import LogoChat from '../assets/chatLogo.png';
-import { useLanguage } from '../components/languageProvider';
+import TranslationButtons from '@/components/translationButtons';
+import BtnCoordinator from '@/assets/btn-professor.png';
+import BtnCoordinator2 from '@/assets/btn-professor2.png';
+import LogoChat from '@/assets/chatLogo.png';
+import { useLanguage } from '@/components/languageProvider';
 
 const translations = {
   en: {
