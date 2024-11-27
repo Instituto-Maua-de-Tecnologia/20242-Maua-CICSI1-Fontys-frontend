@@ -92,8 +92,8 @@ function CoordinatorScreen() {
                 backgroundImage: `url(${BtnCoordinator2})`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center'
-                onC
               }}
+              onClick={handleProfessorScheduleClick}
           >
             <div
                 className="absolute inset-0 rounded-[30px] flex justify-center items-center bg-black hover:bg-opacity-30 transition-all duration-300 opacity-0 hover:opacity-100">

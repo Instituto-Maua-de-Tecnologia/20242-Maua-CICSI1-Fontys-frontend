@@ -6,6 +6,7 @@ import {
   UserCircle,
   Check,
 } from "phosphor-react";
+import {useNavigate} from "react-router-dom";
 
 const users = [
   { name: "John Doe", status: "sent" },
@@ -63,16 +64,27 @@ export default function ProfessorSchedule() {
     return a.name.localeCompare(b.name);
   });
 
+    const navigate = useNavigate();
+    const handleReturnClick = () => {
+        navigate(-1);
+    };
+
   return (
     <div className="bg-[#E8E9EB] h-screen flex flex-col items-center">
-      <button>
-        <ArrowCircleLeft color="#000066" size={48} className="fixed left-20 top-14" />
-      </button>
-      <h1 className="text-black text-4xl mt-14">Professor's Schedule</h1>
+        <button>
+            <ArrowCircleLeft
+                color="#000066"
+                size={48}
+                className="fixed left-5 top-5"
+                onClick={handleReturnClick}
+            />
+        </button>
+        <h1 className="text-black text-4xl mt-14">Professor's Schedule</h1>
 
-      {/* Search bar */}
-      <div className="mt-6 flex items-center w-[80vw]">
-        <div className="w-[50vw] flex flex-row items-center justify-between h-12 px-4 py-2 border-2 border-Blue rounded-xl bg-white">
+        {/* Search bar */}
+        <div className="mt-6 flex items-center w-[80vw]">
+            <div
+                className="w-[50vw] flex flex-row items-center justify-between h-12 px-4 py-2 border-2 border-Blue rounded-xl bg-white">
           <input
             type="text"
             placeholder="Search"
