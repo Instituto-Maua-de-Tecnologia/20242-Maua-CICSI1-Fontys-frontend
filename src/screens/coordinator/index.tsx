@@ -4,6 +4,7 @@ import BtnCoordinator from '@/assets/btn-professor.png';
 import BtnCoordinator2 from '@/assets/btn-professor2.png';
 import LogoChat from '@/assets/chatLogo.png';
 import { useLanguage } from '@/components/languageProvider';
+import {useNavigate} from "react-router-dom";
 
 const translations = {
   en: {
@@ -54,34 +55,56 @@ function CoordinatorScreen() {
     setSelectedYearHalf(event.target.value);
   };
 
+  const navigate = useNavigate();
+  const handleProfessorScheduleClick = () => {
+    navigate('/professors_schedule');
+  };
+
+  const handleProfileClick = () => {
+    navigate('/profile');
+  }
+
   return (
-    <div className="absolute top-0 left-0 w-full h-full bg-[#E8E9EB] flex flex-col justify-center items-center">
-      <TranslationButtons />
-      <div className="grid grid-cols-2 gap-20 mb-8">
+      <div className="absolute top-0 left-0 w-full h-full bg-[#E8E9EB] flex flex-col justify-center items-center">
         <button
-            className="w-80 h-64 relative rounded-[30px] shadow-md transition-all duration-300 transform hover:scale-110 "
-            style={{ backgroundImage: `url(${BtnCoordinator})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
-            onClick={handleGenerateScheduleClick}
-          >
-          <div className="absolute inset-0 rounded-[30px] flex justify-center items-center bg-black hover:bg-opacity-30 transition-all duration-300 opacity-0 hover:opacity-100">
-          <h3 className="text-center text-2xl text-white">{translations[currentLanguage].generateSchedule}</h3>
-          </div>
-        </button>
-
-
-        <button
-          className="w-80 h-64 relative rounded-[30px] shadow-md  transition-all duration-300 transform hover:scale-110"
-          style={{ backgroundImage: `url(${BtnCoordinator2})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+            className="fixed left-6 top-5 text-3xl text-black mb-8 hover:underline"
+            onClick={handleProfileClick}
         >
-        <div className="absolute inset-0 rounded-[30px] flex justify-center items-center bg-black hover:bg-opacity-30 transition-all duration-300 opacity-0 hover:opacity-100">
-        <h3 className="text-center text-2xl text-white">{translations[currentLanguage].professorsSchedule}</h3>
-          </div>
+          Profile
         </button>
-      </div>
-      <div className="flex items-center mb-4">
+        <TranslationButtons/>
+        <div className="grid grid-cols-2 gap-20 mb-8">
+          <button
+              className="w-80 h-64 relative rounded-[30px] shadow-md transition-all duration-300 transform hover:scale-110 "
+              style={{backgroundImage: `url(${BtnCoordinator})`, backgroundSize: 'cover', backgroundPosition: 'center'}}
+              onClick={handleGenerateScheduleClick}
+          >
+            <div
+                className="absolute inset-0 rounded-[30px] flex justify-center items-center bg-black hover:bg-opacity-30 transition-all duration-300 opacity-0 hover:opacity-100">
+              <h3 className="text-center text-2xl text-white">{translations[currentLanguage].generateSchedule}</h3>
+            </div>
+          </button>
 
-        {/* icon alert */}
-      {/* <svg
+
+          <button
+              className="w-80 h-64 relative rounded-[30px] shadow-md  transition-all duration-300 transform hover:scale-110"
+              style={{
+                backgroundImage: `url(${BtnCoordinator2})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center'
+                onC
+              }}
+          >
+            <div
+                className="absolute inset-0 rounded-[30px] flex justify-center items-center bg-black hover:bg-opacity-30 transition-all duration-300 opacity-0 hover:opacity-100">
+              <h3 className="text-center text-2xl text-white">{translations[currentLanguage].professorsSchedule}</h3>
+            </div>
+          </button>
+        </div>
+        <div className="flex items-center mb-4">
+
+          {/* icon alert */}
+          {/* <svg
           className="ml-2 w-6 h-6 text-red-500"
           fill="currentColor"
           viewBox="0 0 20 20"
@@ -93,69 +116,71 @@ function CoordinatorScreen() {
             clipRule="evenodd"
           />
         </svg> */}
-        {/* <h2 className="text-center text-2xl">Generate schedule with ChatGPT</h2> */}
-        {/* icon Chat GPT */}
-      </div>
-      <button className="w-150 h-16 bg-[#000066] text-white rounded-[10px] shadow-md hover:shadow-lg flex items-center justify-center space-x-2 transition-all duration-300 transform hover:scale-110 px-6 py-2 " onClick={handleGenerateScheduleClick}>
-        <span className="text-xl">{translations[currentLanguage].buttonChatGPT}</span>
-        <img src={LogoChat} alt="ChatGPT Logo" className="w-10" />
-        
-      </button>
+          {/* <h2 className="text-center text-2xl">Generate schedule with ChatGPT</h2> */}
+          {/* icon Chat GPT */}
+        </div>
+        <button
+            className="w-150 h-16 bg-[#000066] text-white rounded-[10px] shadow-md hover:shadow-lg flex items-center justify-center space-x-2 transition-all duration-300 transform hover:scale-110 px-6 py-2 "
+            onClick={handleGenerateScheduleClick}>
+          <span className="text-xl">{translations[currentLanguage].buttonChatGPT}</span>
+          <img src={LogoChat} alt="ChatGPT Logo" className="w-10"/>
 
-      {isPopupVisible && (
-        <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50">
-          <div className="relative bg-white p-8 rounded-lg shadow-lg">
-            <button
-              className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
-              onClick={handleClosePopup}
-            >
-              &times;
-            </button>
-            <h2 className="text-center text-2xl mb-4">{translations[currentLanguage].generateButton}</h2>
-            <div className="mb-4 flex items-center">
-              <label className="block text-lg mb-0 mr-4">{translations[currentLanguage].course}</label>
-              <select className="w-48 p-2 border rounded-lg">
-                <option value="course1">{translations[currentLanguage].computerScience}</option>
-                <option value="course2">{translations[currentLanguage].informationSystems}</option>
-                <option value="course3">{translations[currentLanguage].AIDataScience}</option>
-              </select>
-            </div>
-            <div className="mb-4 flex items-center">
-              <label className="block text-lg mb-0 mr-4">{translations[currentLanguage].yearHalf}</label>
-              <div className="flex space-x-4">
-                <label className="flex items-center space-x-2">
-                  <input
-                    type="radio"
-                    name="yearHalf"
-                    value="1"
-                    checked={selectedYearHalf === '1'}
-                    onChange={handleYearHalfChange}
-                    className="form-radio bg-[#000066]"
-                  />
-                  <span>{translations[currentLanguage].first}</span>
-                </label>
-                <label className="flex items-center space-x-2">
-                  <input
-                    type="radio"
-                    name="yearHalf"
-                    value="2"
-                    checked={selectedYearHalf === '2'}
-                    onChange={handleYearHalfChange}
-                    className="form-radio bg-[#000066]"
-                  />
-                  <span>{translations[currentLanguage].second}</span>
-                </label>
+        </button>
+
+        {isPopupVisible && (
+            <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50">
+              <div className="relative bg-white p-8 rounded-lg shadow-lg">
+                <button
+                    className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
+                    onClick={handleClosePopup}
+                >
+                  &times;
+                </button>
+                <h2 className="text-center text-2xl mb-4">{translations[currentLanguage].generateButton}</h2>
+                <div className="mb-4 flex items-center">
+                  <label className="block text-lg mb-0 mr-4">{translations[currentLanguage].course}</label>
+                  <select className="w-48 p-2 border rounded-lg">
+                    <option value="course1">{translations[currentLanguage].computerScience}</option>
+                    <option value="course2">{translations[currentLanguage].informationSystems}</option>
+                    <option value="course3">{translations[currentLanguage].AIDataScience}</option>
+                  </select>
+                </div>
+                <div className="mb-4 flex items-center">
+                  <label className="block text-lg mb-0 mr-4">{translations[currentLanguage].yearHalf}</label>
+                  <div className="flex space-x-4">
+                    <label className="flex items-center space-x-2">
+                      <input
+                          type="radio"
+                          name="yearHalf"
+                          value="1"
+                          checked={selectedYearHalf === '1'}
+                          onChange={handleYearHalfChange}
+                          className="form-radio bg-[#000066]"
+                      />
+                      <span>{translations[currentLanguage].first}</span>
+                    </label>
+                    <label className="flex items-center space-x-2">
+                      <input
+                          type="radio"
+                          name="yearHalf"
+                          value="2"
+                          checked={selectedYearHalf === '2'}
+                          onChange={handleYearHalfChange}
+                          className="form-radio bg-[#000066]"
+                      />
+                      <span>{translations[currentLanguage].second}</span>
+                    </label>
+                  </div>
+                </div>
+                <div className="flex justify-center">
+                  <button className="w-32 h-8 bg-[#000066] text-white rounded-[10px] shadow-md hover:shadow-lg">
+                    <div className="text-center text-x2">{translations[currentLanguage].generateButton}</div>
+                  </button>
+                </div>
               </div>
             </div>
-            <div className="flex justify-center">
-              <button className="w-32 h-8 bg-[#000066] text-white rounded-[10px] shadow-md hover:shadow-lg">
-                <div className="text-center text-x2">{translations[currentLanguage].generateButton}</div>
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
+        )}
+      </div>
   );
 }
 

@@ -3,6 +3,7 @@ import { Dropdown } from "primereact/dropdown";
 import { useState } from "react";
 import TableVisualizeSchedule from "@/components/tableVisualizeSchedule";
 import { useLanguage } from '@/components/languageProvider';
+import { useNavigate } from 'react-router-dom';
 
 export default function VisualizeSchedule() {
     const translations = {
@@ -48,13 +49,20 @@ export default function VisualizeSchedule() {
         );
     };
 
+    const navigate = useNavigate();
+
+    const handleReturnClick = () => {
+        navigate(-1);
+    };
+
     return (
         <div className="bg-[#F5F5F5] h-screen">
             <button>
                 <ArrowCircleLeft
                     color="#000066"
                     size={48}
-                    className="fixed left-28 top-8"
+                    className="fixed left-5 top-5"
+                    onClick={handleReturnClick}
                 />
             </button>
             <div className="flex flex-row">

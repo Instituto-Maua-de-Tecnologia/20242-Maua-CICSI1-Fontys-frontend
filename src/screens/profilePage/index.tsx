@@ -1,6 +1,8 @@
 import TranslationButtons from '@/components/translationButtons';
 import { msalInstance } from '@/api/auth/msalConfig';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import {ArrowCircleLeft} from "phosphor-react";
+import {useNavigate} from "react-router-dom";
 
 export default function ProfilePage() {
     const [name, setName] = useState<string | null>(null);
@@ -22,9 +24,22 @@ export default function ProfilePage() {
         });
     };
 
+    const navigate = useNavigate();
+    const handleReturnClick = () => {
+        navigate(-1);
+    };
+
     return (
         <div className="absolute top-0 left-0 w-full h-full bg-light-gray flex flex-col items-center pt-20">
-            <TranslationButtons />
+            <button>
+                <ArrowCircleLeft
+                    color="#000066"
+                    size={48}
+                    className="fixed left-5 top-5"
+                    onClick={handleReturnClick}
+                />
+            </button>
+            <TranslationButtons/>
 
             <div className="flex flex-col items-center mb-10">
                 <div

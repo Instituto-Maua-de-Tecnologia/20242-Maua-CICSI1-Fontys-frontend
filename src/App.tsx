@@ -20,7 +20,7 @@ export function App() {
           {/*<Route path='profilepicture' element={<ProfilePicture size={100} className={"rounded-full border-4 border-blue-500 shadow-lg"} />} />*/}
           <Route path='professor' element={<Professor/>}/>
           <Route path="professors_schedule" element={<ProfessorSchedule />} />
-          <Route path="schedule" element={<ScheduleTable/>}/>
+          <Route path="inform_availability" element={<ScheduleTable/>}/>
           <Route path="professor_registration" element={<ProfessorRegistration/>}/>
           <Route path="coordinator" element={<CoordinatorScreen/>}/>
           <Route path="visualize_schedule" element={<VisualizeSchedule/>}/>
