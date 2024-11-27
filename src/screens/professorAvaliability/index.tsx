@@ -1,4 +1,5 @@
 import React, { useState, ChangeEvent } from 'react';
+import {useNavigate} from "react-router-dom";
 import TranslationButtons from '@/components/translationButtons';
 import { useLanguage } from '@/components/languageProvider';
 import {
@@ -104,10 +105,20 @@ const ProfessorAvaliability: React.FC = () => {
       }
     }
 
+    const navigate = useNavigate();
+    const handleReturnClick = () => {
+        navigate('/professor');
+    };
+
     return (
       <div className="p-5">
         <button>
-          <ArrowCircleLeft color="#000066" size={48} className="fixed left-3 top-" />
+          <ArrowCircleLeft
+              color="#000066"
+              size={48}
+              className="fixed left-3 top-"
+              onClick={handleReturnClick}
+          />
         </button>
         <TranslationButtons/>
         <h2 className="text-center text-3xl text-black mb-8">{translations[currentLanguage].scheduleTitle}</h2>
