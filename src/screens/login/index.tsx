@@ -6,7 +6,7 @@ import { InputText } from 'primereact/inputtext';
 import { Eye, EyeSlash } from 'phosphor-react';
 import { useLanguage } from '@/components/languageProvider';
 import TranslationButtons from '@/components/translationButtons';
-import { msalInstance, initializeMsal } from "../../api/auth/msalConfig.tsx"; // Import initializeMsal function
+import { msalInstance, initializeMsal } from '@/api/auth/msalConfig'; // Import initializeMsal function
 import { useProfileStore } from '@/stores/profileStore';
 
 const translations = {
@@ -102,6 +102,7 @@ export default function Login() {
     }
 
     try {
+      sessionStorage.removeItem("msal.interaction.status");
       const loginResponse = await msalInstance.loginPopup({
         scopes: ["openid", "profile", "email", "User.Read"],
       });

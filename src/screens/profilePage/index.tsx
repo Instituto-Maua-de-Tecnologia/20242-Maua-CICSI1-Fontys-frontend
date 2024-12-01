@@ -1,6 +1,7 @@
 import TranslationButtons from '@/components/translationButtons';
-import { msalInstance } from '@/api/auth/msalConfig';
-import React, { useState, useEffect } from 'react';
+import {ProfilePicture} from "@/components/profile/ProfilePicture.tsx";
+import { msalInstance, initializeMsal } from '@/api/auth/msalConfig';
+import { useState, useEffect } from 'react';
 import {ArrowCircleLeft} from "phosphor-react";
 import {useNavigate} from "react-router-dom";
 
@@ -14,15 +15,20 @@ export default function ProfilePage() {
         }
     }, []);
 
-    const handleLogout = () => {
-        msalInstance.logoutRedirect({
-            postLogoutRedirectUri: window.location.origin,
-            account: msalInstance.getActiveAccount(),
-        }).catch((error) => {
-            console.error("Logout failed:", error);
+    const handleLogout = async () => {
+        try {
+            sessionStorage.removeItem("msal.interaction.status");
+            await initializeMsal();
+            await msalInstance.logoutRedirect({
+                postLogoutRedirectUri: window.location.origin,
+                account: msalInstance.getActiveAccount(),
+            });
+        } catch (error) {
+            alert(`Logout failed: ${error}`);
             window.location.href = window.location.origin;
-        });
+        }
     };
+
 
     const navigate = useNavigate();
     const handleReturnClick = () => {
@@ -42,9 +48,7 @@ export default function ProfilePage() {
             <TranslationButtons/>
 
             <div className="flex flex-col items-center mb-10">
-                <div
-                    className="w-32 h-32 rounded-full bg-cover bg-center mb-4 shadow-md"
-                />
+                <ProfilePicture size={100} className="w-32 h-32 rounded-full bg-cover bg-center mb-4 shadow-md"/>
                 <h1 className="text-3xl text-black font-semibold">{name || 'User'}</h1>
             </div>
 
@@ -57,3 +61,4 @@ export default function ProfilePage() {
         </div>
     );
 }
+
