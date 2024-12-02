@@ -1,7 +1,7 @@
 import { useLanguage } from '@/components/languageProvider';
 import TranslationButtons from '@/components/translationButtons';
-import BtnCoordinator from '@/assets/btn-professor.png';
-import BtnCoordinator2 from '@/assets/btn-professor2.png';
+import BtnCoordinator from '@/assets/images/btn-professor.png';
+import BtnCoordinator2 from '@/assets/images/btn-professor2.png';
 import { msalInstance } from '@/api/auth/msalConfig';
 import { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';

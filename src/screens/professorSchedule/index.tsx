@@ -1,4 +1,4 @@
-import { useState } from "react";
+import {useContext, useEffect, useState} from "react";
 import {
   ArrowCircleLeft,
   MagnifyingGlass,
@@ -7,6 +7,7 @@ import {
   Check,
 } from "phosphor-react";
 import {useNavigate} from "react-router-dom";
+import {UserContext} from "@/context/user_context.tsx";
 
 const users = [
   { name: "John Doe", status: "sent" },
@@ -26,6 +27,7 @@ export default function ProfessorSchedule() {
   const [searchTerm, setSearchTerm] = useState("");
   const [showAllChecked, setShowAllChecked] = useState(false);
   const [showUnsentChecked, setShowUnsentChecked] = useState(false);
+  const { getProfessors } = useContext(UserContext);
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
@@ -64,10 +66,23 @@ export default function ProfessorSchedule() {
     return a.name.localeCompare(b.name);
   });
 
-    const navigate = useNavigate();
-    const handleReturnClick = () => {
-        navigate(-1);
-    };
+  const navigate = useNavigate();
+  const handleReturnClick = () => {
+    navigate(-1);
+  };
+
+  async function fetchProfessors() {
+      try {
+          const response = await getProfessors();
+          console.log("Fetch professors response",response)
+      } catch (error) {
+          console.error("Erro ao buscar perfil:", error);
+      }
+  }
+
+    useEffect(() => {
+      fetchProfessors()
+    }, []);
 
   return (
     <div className="bg-[#E8E9EB] h-screen flex flex-col items-center">

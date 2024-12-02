@@ -1,6 +1,6 @@
 import { useLanguage } from '../languageProvider';
-import english from '../../assets/english.svg';
-import portuguese from '../../assets/portuguese.svg';
+import english from '@/assets/svg/english.svg';
+import portuguese from '@/assets/svg/portuguese.svg';
 
 export default function TranslationButtons() {
   const { currentLanguage, setCurrentLanguage } = useLanguage();
