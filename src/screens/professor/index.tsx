@@ -11,12 +11,14 @@ export default function Professor() {
   const navigate = useNavigate();
   const {currentLanguage} = useLanguage();
 
-  useEffect(() => {
-    const currentAccount = msalInstance.getActiveAccount();
-    if (currentAccount && currentAccount.idTokenClaims) {
-      setName(currentAccount.idTokenClaims.name || null);
-    }
-  }, []);
+    useEffect(() => {
+        const currentAccount = msalInstance.getActiveAccount();
+        if (!currentAccount) {
+            navigate('/');
+        } else if (currentAccount.idTokenClaims) {
+            setName(currentAccount.idTokenClaims.name || null);
+        }
+    }, [navigate]);
 
   const handleVisualizeScheduleClick = () => {
     navigate('/visualize_schedule');

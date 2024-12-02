@@ -4,6 +4,7 @@ import {useEffect, useState} from "react";
 import TableVisualizeSchedule from "@/components/tableVisualizeSchedule";
 import { useLanguage } from '@/components/languageProvider';
 import { useNavigate } from 'react-router-dom';
+import {msalInstance} from "@/api/auth/msalConfig.tsx";
 
 export default function VisualizeSchedule() {
     const translations = {
@@ -60,6 +61,13 @@ export default function VisualizeSchedule() {
             setSelectedSubject(subjects[0].value);
         }
     }, []);
+
+    useEffect(() => {
+        const currentAccount = msalInstance.getActiveAccount();
+        if (!currentAccount) {
+            navigate("/");
+        }
+    }, );
 
     return (
         <div className="bg-[#F5F5F5] h-screen">

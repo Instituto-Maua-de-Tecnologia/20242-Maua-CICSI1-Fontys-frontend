@@ -7,6 +7,7 @@ import {
 } from "phosphor-react";
 import {AvailabilityContext} from "@/context/availability_context.tsx";
 import {CreateAvailabilityRequestDTO} from "@/api/types/availability_dto.ts";
+import {msalInstance} from "@/api/auth/msalConfig.tsx";
 
 const translations = {
   en: {
@@ -41,6 +42,13 @@ const translations = {
   }
 };
 const ProfessorAvaliability: React.FC = () => {
+
+    useEffect(() => {
+        const currentAccount = msalInstance.getActiveAccount();
+        if (!currentAccount) {
+            navigate("/");
+        }
+    }, );
 
     const {currentLanguage} = useLanguage();
     const { createAvailability } = useContext(AvailabilityContext);

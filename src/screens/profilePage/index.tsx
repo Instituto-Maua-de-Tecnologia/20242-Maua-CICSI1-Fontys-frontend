@@ -15,6 +15,13 @@ export default function ProfilePage() {
         }
     }, []);
 
+    useEffect(() => {
+        const currentAccount = msalInstance.getActiveAccount();
+        if (!currentAccount) {
+            navigate("/");
+        }
+    }, );
+
     const handleLogout = async () => {
         try {
             sessionStorage.removeItem("msal.interaction.status");
