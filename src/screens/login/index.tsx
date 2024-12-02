@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Image_background_login from '@/assets/Image_background_login.png';
-import logo_maua from '@/assets/logo_maua.png';
+import Image_background_login from '@/assets/images/Image_background_login.png';
+import logo_maua from '@/assets/images/logo_maua.png';
 import { InputText } from 'primereact/inputtext';
 import { Eye, EyeSlash } from 'phosphor-react';
 import { useLanguage } from '@/components/languageProvider';
