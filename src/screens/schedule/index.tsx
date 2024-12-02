@@ -7,6 +7,7 @@ import {
 } from "phosphor-react";
 import {AvailabilityContext} from "@/context/availability_context.tsx";
 import {CreateAvailabilityRequestDTO} from "@/api/types/availability_dto.ts";
+import {msalInstance} from "@/api/auth/msalConfig.tsx";
 
 const translations = {
   en: {
@@ -45,6 +46,12 @@ export default function Schedule(){
   const {currentLanguage} = useLanguage();
   const { createAvailability } = useContext(AvailabilityContext);
 
+  useEffect(() => {
+    const currentAccount = msalInstance.getActiveAccount();
+    if (!currentAccount) {
+      navigate("/");
+    }
+  }, );
 
   const [availability, setAvailability] = useState({
     mon: [],

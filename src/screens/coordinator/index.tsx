@@ -6,6 +6,8 @@ import LogoChat from '@/assets/images/chatLogo.png';
 import { useLanguage } from '@/components/languageProvider';
 import {useNavigate} from "react-router-dom";
 import {ScheduleContext} from "@/context/schedule_context.tsx";
+import { msalInstance } from '@/api/auth/msalConfig';
+import {useEffect} from "react";
 
 const translations = {
   en: {
@@ -36,7 +38,6 @@ const translations = {
   }
 };
 
-
 function CoordinatorScreen() {
 
   const {currentLanguage} = useLanguage();
@@ -45,6 +46,13 @@ function CoordinatorScreen() {
   const [algorithm, setAlgorithm] = useState(false);
   const [selectedYearHalf, setSelectedYearHalf] = useState('1');
   const { generateSchedule, generateWithAI } = useContext(ScheduleContext);
+
+    useEffect(() => {
+        const currentAccount = msalInstance.getActiveAccount();
+        if (!currentAccount) {
+            navigate('/');
+        }
+    }, [navigate]);
 
   const handleYearHalfChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSelectedYearHalf(event.target.value);
