@@ -27,7 +27,8 @@ export class UserRepositoryHttp {
 
     async createUser(name: string){
         try {
-            const response = await http.post('/users', { "name": name});
+            const response = await http.post('/users/create-user', { "name": name});
+
             return response.data;
         } catch (error: any) {
             console.log("Create user respository error: ", error)

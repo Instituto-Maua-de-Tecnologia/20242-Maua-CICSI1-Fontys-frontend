@@ -9,6 +9,7 @@ import {
 import {useNavigate} from "react-router-dom";
 import {UserContext} from "@/context/user_context.tsx";
 import {AvailabilityContext} from "@/context/availability_context.tsx";
+import {User} from "@/api/types/user_dto.ts";
 
 const users = [
   { name: "John Doe", status: "sent" },
@@ -29,7 +30,7 @@ export default function ProfessorSchedule() {
   const [showAllChecked, setShowAllChecked] = useState(false);
   const [showUnsentChecked, setShowUnsentChecked] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState<User[]>([]);
   const { getProfessors } = useContext(UserContext);
   const { getAvailabilityByUser } = useContext(AvailabilityContext);
 
@@ -157,7 +158,7 @@ export default function ProfessorSchedule() {
             <button
               key={index}
               className={`flex items-center justify-between mb-4 p-3 rounded-lg shadow w-full text-left transition-colors ${(user.status === "unsent" || user.status === null) ? "bg-black/30" : "bg-white hover:bg-light-gray"}`}
-              onClick={() => getAvailabilityById(user.id)}
+              onClick={() => getAvailabilityById(user.user_id)}
               disabled={user.status === "unsent"}
             >
               <div className="flex items-center">
