@@ -1,7 +1,8 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import { useLanguage } from "@/components/languageProvider";
 import TranslationButtons from "@/components/translationButtons";
 import {Check, Download, Question, XCircle} from "phosphor-react";
+import {UserContext} from "@/context/user_context.tsx";
 
 export default function ProfessorRegistration() {
   const { currentLanguage } = useLanguage();
@@ -12,7 +13,12 @@ export default function ProfessorRegistration() {
   const [incorrectFile, setIncorrectFile] = useState(false);
   const [isEnter, setIsEnter] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [names, setNames] = useState<string[]>([]);
   const [file, setFile] = useState<File>();
+  const [error, setError] = useState<boolean>( false);
+  const [partialError, setPartialError] = useState<boolean>(false);
+  const [errorUserList, setErrorUserList] = useState<string[]>([]);
+  const { uploadExcel, createUser} = useContext(UserContext);
 
   const handleButtonClick = () => {
     setShowCheck(prevShowCheck => !prevShowCheck);
@@ -37,8 +43,6 @@ export default function ProfessorRegistration() {
     });
   };
 
-  const names = ["João Silva", "Maria Oliveira", "Pedro Santos", "Ana Souza", "Carlos Lima", "Mariana Pereira", "José Almeida", "Luana Costa", "Rafaela Martins", "Fernando Carvalho", "Marcelo Zoletti"];
-
   const translations = {
     en: {
       title: 'Professor Registration',
@@ -53,6 +57,9 @@ export default function ProfessorRegistration() {
       incorrectFile: "Incorrect file format",
       popupTitle: "The .xlsx file must have a column named \"Professors\".",
       sendButton: 'Send',
+      errorDetected: "Error Detected",
+      errorMessage: "An error occurred while creating the professors accounts. Please check your .xlsx file and try again later.",
+      partialErrorMessage: "An error occurred while creating the following professors. Please check your .xlsx file and try again later.",
     },
     pt: {
       title: 'Cadastro de Professores',
@@ -67,6 +74,9 @@ export default function ProfessorRegistration() {
       incorrectFile: "Formato de arquivo incorreto",
       popupTitle: "O arquivo .xlsx deve possuir uma coluna chamada \"Professores\".",
       sendButton: 'Enviar',
+      errorDetected: "Erro Detectado",
+      errorMessage: "Ocorreu um erro ao criar as contas dos professores. Por favor, verifique seu arquivo .xlsx e tente novamente mais tarde.",
+      partialErrorMessage: "Ocorreu um erro ao criar os seguintes professores. Por favor, verifique seu arquivo .xlsx e tente novamente mais tarde.",
     }
   };
 
@@ -88,7 +98,7 @@ export default function ProfessorRegistration() {
   };
 
   const handleDragOver = (e) => {
-    e.preventDefault(); // Necessário para permitir o drop
+    e.preventDefault();
     setIsEnter(true);
   };
 
@@ -116,6 +126,43 @@ export default function ProfessorRegistration() {
   const handleHelpPopup = () => {
     setIsHelpPopupOpen(isHelpPopupOpen => !isHelpPopupOpen);
   }
+
+  async function handleUploadExcel(){
+    if(!file) return;
+    try {
+      setIsLoading(true);
+      const response = await uploadExcel(file);
+      setNames(response.data.professores)
+      setIsLoading(false);
+      setIsModalOpen(true);
+    }
+    catch (error: any) {
+      setIsLoading(false);
+      console.log(error);
+    }
+  }
+
+  async function handleCreateProfessor() {
+    try {
+      // Aguarda que todas as promessas terminem
+      await Promise.all(names.map(async (name) => {
+        try {
+          const response = await createUser(name);
+          console.log(response);
+        } catch (error: any) {
+          setPartialError(true);
+          setErrorUserList((prev) => {
+            return [...prev, name];
+          })
+        }
+      }));
+      setIsModalOpen(false);
+    } catch (error) {
+      console.log(error);
+      setError(true); // Defina o erro em caso de falha geral
+    }
+  }
+
 
   // useEffect(() => {
   //   console.log(file)
@@ -182,7 +229,7 @@ export default function ProfessorRegistration() {
         <button
             className={`w-44 h-9 flex items-center justify-center rounded-xl text-lg text-center transition duration-100 transform mt-4 ${file ? "bg-Blue hover:scale-105 shadow-2xl text-white" : "shadow-inner bg-gray-300 text-gray-400"}`}
             disabled={!file}
-            onClick={openModal}
+            onClick={handleUploadExcel}
         >
           {isLoading ? (
             <div className="spinner justify-self-center"></div>
@@ -194,52 +241,80 @@ export default function ProfessorRegistration() {
 
       {/* Modal */}
       {isModalOpen && (
-          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-            <div className="bg-[#E8E9EB] py-6 rounded-lg shadow-xl w-[60%] h-[90%]">
-            <div className="flex flex-row items-center justify-between">
-              <div className="flex-grow text-center pl-10">
-                <h2 className="text-3xl font-semibold">{translations[currentLanguage].titleModal}</h2>
-              </div>
-              <button onClick={closeModal} className="ml-auto transition duration-100 transform hover:scale-105 mr-2">
-                <XCircle size={48} color="#CC0000" />
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-[#E8E9EB] py-6 rounded-lg shadow-xl w-[60%] h-[90%]">
+          <div className="flex flex-row items-center justify-between">
+            <div className="flex-grow text-center pl-10">
+              <h2 className="text-3xl font-semibold">{translations[currentLanguage].titleModal}</h2>
+            </div>
+            <button onClick={closeModal} className="ml-auto transition duration-100 transform hover:scale-105 mr-2">
+              <XCircle size={48} color="#CC0000" />
+            </button>
+          </div>
+
+          {/* Lista de nomes rolável */}
+          <div className="mt-4 overflow-y-auto h-[80%] mx-6">
+            <div className="grid grid-cols-1 gap-4 justify-center">
+              {names.map((name, index) => (
+                <div key={index} className="bg-white mr-6 p-2 pl-5 rounded-xl shadow-md flex items-center justify-between">
+                  <p className="text-2xl text-black">{name}</p>
+                  <button className="flex items-center" onClick={() => handleCheckboxToggle(index)}>
+                    <div className={`rounded-xl border-2 border-[#000066] w-10 h-10 flex items-center justify-center`}>
+                      {selectedIndexes.includes(index) && <Check color="#000066" size={30} />}
+                    </div>
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="flex justify-center items-center py-5 absolute w-[75%]">
+            <div className="flex items-center mx-auto">
+              <button
+                onClick={handleCreateProfessor}
+                className="bg-[#000066] text-white w-44 h-10 rounded-xl text-2xl text-center transition duration-100 transform hover:scale-105"
+              >
+                {translations[currentLanguage].buttonModal}
+              </button>
+
+              <button className="ml-10 flex flex-row" onClick={handleButtonClick}>
+                <div className="rounded-xl border-2 border-[#000066] w-10 h-10 flex items-center justify-center">
+                  {showCheck && <Check size={30} color="#000066" />}
+                </div>
+                <p className="pl-4 text-2xl py-1">{translations[currentLanguage].verifiedAll}</p>
               </button>
             </div>
-
-            {/* Lista de nomes rolável */}
-            <div className="mt-4 overflow-y-auto h-[80%] mx-6">
-              <div className="grid grid-cols-1 gap-4 justify-center">
-                {names.map((name, index) => (
-                  <div key={index} className="bg-white mr-6 p-2 pl-5 rounded-xl shadow-md flex items-center justify-between">
-                    <p className="text-2xl text-black">{name}</p>
-                    <button className="flex items-center" onClick={() => handleCheckboxToggle(index)}>
-                      <div className={`rounded-xl border-2 border-[#000066] w-10 h-10 flex items-center justify-center`}>
-                        {selectedIndexes.includes(index) && <Check color="#000066" size={30} />}
-                      </div>
-                    </button>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="flex justify-center items-center py-5 absolute w-[75%]">
-              <div className="flex items-center mx-auto">
-                <button
-                  className="bg-[#000066] text-white w-44 h-10 rounded-xl text-2xl text-center transition duration-100 transform hover:scale-105"
-                >
-                  {translations[currentLanguage].buttonModal}
-                </button>
-
-                <button className="ml-10 flex flex-row" onClick={handleButtonClick}>
-                  <div className="rounded-xl border-2 border-[#000066] w-10 h-10 flex items-center justify-center">
-                    {showCheck && <Check size={30} color="#000066" />}
-                  </div>
-                  <p className="pl-4 text-2xl py-1">{translations[currentLanguage].verifiedAll}</p>
-                </button>
-              </div>
-            </div>
+          </div>
 
           </div>
         </div>
-      )}
+        )}
+      {(error || partialError) &&
+          <div className="fixed inset-0 bg-black/30 z-10 flex justify-center items-center">
+            <div className="p-4 bg-[#E8E9EB] rounded-lg shadow-xl w-1/2 transition-opacity duration-300">
+              <div className="flex flex-row items-center justify-between">
+                <div className="flex-grow text-center pl-10">
+                  <h2 className="text-2xl font-semibold">{translations[currentLanguage].errorDetected}</h2>
+                </div>
+                <button onClick={() => setError(false)} className="ml-auto transition duration-100 transform hover:scale-105 mr-2">
+                  <XCircle size={48} color="#CC0000"/>
+                </button>
+              </div>
+              <div className="justify-between items-center px-2">
+                <p className="mt-2 text-black ">
+                    {error ? translations[currentLanguage].errorMessage
+                        : translations[currentLanguage].partialErrorMessage}
+                </p>
+                <p>
+                    {errorUserList.map((name, index) => (
+                        <p key={index}>- {name}</p>
+                    ))}
+                </p>
+              </div>
+            </div>
+          </div>
+      }
+
+
     </div>
   );
 }
