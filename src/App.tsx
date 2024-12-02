@@ -9,6 +9,7 @@ import ProfessorRegistration from './screens/professorRegistration';
 import CoordinatorScreen from '@/screens/coordinator';
 import VisualizeSchedule from '@/screens/visualizeSchedule';
 import ProfilePage from "@/screens/profilePage";
+import GeneratedSchedule from "@/screens/generatedSchedule";
 
 export function App() { 
   return (
@@ -24,6 +25,7 @@ export function App() {
           <Route path="coordinator" element={<CoordinatorScreen/>}/>
           <Route path="visualize_schedule" element={<VisualizeSchedule/>}/>
           <Route path="profile" element={<ProfilePage/>}/>
+          <Route path="generated_schedule" element={<GeneratedSchedule/>}/>
           <Route path="*" element={<NotFound/>}/>
         </Routes>
       </BrowserRouter>
