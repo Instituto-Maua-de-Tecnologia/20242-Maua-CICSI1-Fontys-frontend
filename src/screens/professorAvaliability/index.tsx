@@ -1,14 +1,12 @@
-import React, { useState, ChangeEvent } from 'react';
+import React, {useState, ChangeEvent, useContext, useEffect} from 'react';
 import {useNavigate} from "react-router-dom";
 import TranslationButtons from '@/components/translationButtons';
 import { useLanguage } from '@/components/languageProvider';
 import {
   ArrowCircleLeft,
-  MagnifyingGlass,
-  MagnifyingGlassPlus,
-  UserCircle,
-  Check,
 } from "phosphor-react";
+import {AvailabilityContext} from "@/context/availability_context.tsx";
+import {CreateAvailabilityRequestDTO} from "@/api/types/availability_dto.ts";
 
 const translations = {
   en: {
@@ -45,6 +43,8 @@ const translations = {
 const ProfessorAvaliability: React.FC = () => {
 
     const {currentLanguage} = useLanguage();
+    const { createAvailability } = useContext(AvailabilityContext);
+
 
     const [availability, setAvailability] = useState({
       mon: [],
@@ -109,6 +109,25 @@ const ProfessorAvaliability: React.FC = () => {
     const handleReturnClick = () => {
         navigate('/professor');
     };
+
+    async function handleUpdateAvailability(){
+        try {
+            const data: CreateAvailabilityRequestDTO = {
+                user_id: "1",
+                availabilities: [
+                    {
+                        slot_id: "1",
+                        value: "Possible"
+                    }
+                ]
+            }
+            const response = await createAvailability(data);
+            console.log("Post availability response: ", response)
+        }
+        catch (error: any) {
+            throw new Error(error)
+        }
+    }
 
     return (
       <div className="p-5">

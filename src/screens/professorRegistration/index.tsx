@@ -295,7 +295,7 @@ export default function ProfessorRegistration() {
                 <div className="flex-grow text-center pl-10">
                   <h2 className="text-2xl font-semibold">{translations[currentLanguage].errorDetected}</h2>
                 </div>
-                <button onClick={() => setError(false)} className="ml-auto transition duration-100 transform hover:scale-105 mr-2">
+                <button onClick={() => {setError(false); setPartialError(false)}} className="ml-auto transition duration-100 transform hover:scale-105 mr-2">
                   <XCircle size={48} color="#CC0000"/>
                 </button>
               </div>
