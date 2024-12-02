@@ -3,14 +3,14 @@ import {ScheduleRepositoryHttp} from "@/api/repositories/schedule_repository_htt
 import {Schedule} from "@/api/types/schedule_dto.ts";
 
 type ScheduleContextType = {
-    generateSchedule: () => Promise<Schedule[]>;
+    generateSchedule: (semester_number: string) => Promise<Schedule[]>;
     publishSchedule: (data: Schedule[]) => Promise<object>;
     getSchedule: () => Promise<Schedule[]>;
-    generateWithAI: () => Promise<Schedule[]>;
+    generateWithAI: (semester_number: string) => Promise<Schedule[]>;
 }
 
 const defaultScheduleContext = {
-    generateSchedule: async () => {
+    generateSchedule: async (_semester_number: string) => {
         return []
     },
     publishSchedule: async (_data: Schedule[]) => {
@@ -21,7 +21,7 @@ const defaultScheduleContext = {
     getSchedule: async () => {
         return []
     },
-    generateWithAI: async () => {
+    generateWithAI: async (_semester_number: string) => {
         return []
     }
 }
@@ -31,9 +31,10 @@ export const ScheduleContext = createContext<ScheduleContextType>(defaultSchedul
 export default function ScheduleContextProvider({ children }: PropsWithChildren) {
     const scheduleRepository = new ScheduleRepositoryHttp()
 
-    async function generateSchedule() {
+    async function generateSchedule(semester_number: string) {
         try {
-            const response = await scheduleRepository.generateSchedule()
+            const response = await scheduleRepository.generateSchedule(semester_number)
+            console.log("Generating schedule: " ,response)
             return response
         } catch (error: any) {
             console.log("Error generate schedule context: ", error)
@@ -61,9 +62,9 @@ export default function ScheduleContextProvider({ children }: PropsWithChildren)
         }
     }
 
-    async function generateWithAI() {
+    async function generateWithAI(semester_number: string) {
         try {
-            const response = await scheduleRepository.generateWithAI()
+            const response = await scheduleRepository.generateWithAI(semester_number)
             return response
         } catch (error: any) {
             console.log("Error generate with AI schedule context: ", error)
