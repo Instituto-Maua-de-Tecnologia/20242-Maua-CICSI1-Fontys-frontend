@@ -61,9 +61,9 @@ function CoordinatorScreen() {
 
   async function handleGenerateSchedule(){
     try {
-      const response = await generateSchedule();
-      console.log(response);
-      return response;
+      const response = await generateSchedule(selectedYearHalf);
+      localStorage.setItem('schedule', JSON.stringify(response));
+      navigate('/generated_schedule');
     }
     catch (error: any) {
       return error;
@@ -72,8 +72,9 @@ function CoordinatorScreen() {
 
   async function handleGenerateWithAI(){
     try {
-      const response = await generateWithAI();
-      return response;
+      const response = await generateWithAI(selectedYearHalf);
+      localStorage.setItem('schedule', JSON.stringify(response));
+      navigate('/generated_schedule');
     }
     catch (error: any) {
       return error;
