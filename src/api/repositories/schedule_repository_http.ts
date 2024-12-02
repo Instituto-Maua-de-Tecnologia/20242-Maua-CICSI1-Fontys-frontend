@@ -2,9 +2,11 @@ import { http } from "../http";
 import {Schedule} from "@/api/types/schedule_dto.ts";
 
 export class ScheduleRepositoryHttp {
-    async generateSchedule() {
+    async generateSchedule(semester_number: string) {
+        console.log("Generating schedule: ")
         try {
-            const response = await http.get('/schedule');
+            const response = await http.get(`/schedule?semester_number=${semester_number}`);
+            console.log("Generating schedule: " ,response)
             return response.data;
         } catch (error: any) {
             console.log("Error generate schedule respository: ", error)
@@ -25,7 +27,7 @@ export class ScheduleRepositoryHttp {
 
     async getSchedule() {
         try {
-            const response = await http.get('/schedule');
+            const response = await http.get(`/schedule`);
             console.log("Get schedule response: ", response.data)
             return response.data;
         } catch (error: any) {
@@ -35,9 +37,9 @@ export class ScheduleRepositoryHttp {
         }
     }
 
-    async generateWithAI() {
+    async generateWithAI(semester_number: string) {
         try {
-            const response = await http.get('/schedule/ai');
+            const response = await http.get(`/schedule/ai?${semester_number}`);
             return response.data;
         } catch (error: any) {
             console.log("Error generate with AI schedule respository: ", error)
