@@ -1,6 +1,6 @@
 import { ArrowCircleLeft } from "phosphor-react";
 import { Dropdown } from "primereact/dropdown";
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import TableVisualizeSchedule from "@/components/tableVisualizeSchedule";
 import { useLanguage } from '@/components/languageProvider';
 import { useNavigate } from 'react-router-dom';
@@ -55,6 +55,12 @@ export default function VisualizeSchedule() {
         navigate(-1);
     };
 
+    useEffect(() => {
+        if (!selectedSubject) {
+            setSelectedSubject(subjects[0].value);
+        }
+    }, []);
+
     return (
         <div className="bg-[#F5F5F5] h-screen">
             <button>
@@ -82,7 +88,7 @@ export default function VisualizeSchedule() {
                 </div>
             </div>
             <div className="flex justify-center mt-12 mb-1">
-                <TableVisualizeSchedule/>
+                <TableVisualizeSchedule selectedSubject={selectedSubject}/>
             </div>
         </div>
     );
