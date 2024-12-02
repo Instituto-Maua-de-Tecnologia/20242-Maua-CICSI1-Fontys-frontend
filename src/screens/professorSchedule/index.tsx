@@ -8,6 +8,7 @@ import {
 } from "phosphor-react";
 import {useNavigate} from "react-router-dom";
 import {UserContext} from "@/context/user_context.tsx";
+import {AvailabilityContext} from "@/context/availability_context.tsx";
 
 const users = [
   { name: "John Doe", status: "sent" },
@@ -30,6 +31,7 @@ export default function ProfessorSchedule() {
   const [isLoading, setIsLoading] = useState(false);
   const [users, setUsers] = useState([]);
   const { getProfessors } = useContext(UserContext);
+  const { getAvailabilityByUser } = useContext(AvailabilityContext);
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
@@ -86,9 +88,20 @@ export default function ProfessorSchedule() {
       }
   }
 
-    useEffect(() => {
-      fetchProfessors()
-    }, []);
+  useEffect(() => {
+    fetchProfessors()
+  }, []);
+
+  async function getAvailabilityById(userId: string) {
+    try {
+      const response = await getAvailabilityByUser(userId);
+      console.log("Get availability response: ", response);
+      localStorage.setItem("availability", JSON.stringify(response));
+      navigate(`/availability/${userId}`);
+    } catch (error) {
+      console.error("Error get availability: ", error);
+    }
+  }
 
   return (
     <div className="bg-[#E8E9EB] h-screen flex flex-col items-center">
@@ -144,7 +157,7 @@ export default function ProfessorSchedule() {
             <button
               key={index}
               className={`flex items-center justify-between mb-4 p-3 rounded-lg shadow w-full text-left transition-colors ${(user.status === "unsent" || user.status === null) ? "bg-black/30" : "bg-white hover:bg-light-gray"}`}
-              onClick={() => alert(`Selected: ${user.name}`)}
+              onClick={() => getAvailabilityById(user.id)}
               disabled={user.status === "unsent"}
             >
               <div className="flex items-center">
