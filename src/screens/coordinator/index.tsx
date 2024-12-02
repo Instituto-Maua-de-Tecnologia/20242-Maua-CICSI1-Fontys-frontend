@@ -20,7 +20,7 @@ const translations = {
     yearHalf: 'Year half:',
     first: '1st',
     second: '2nd',
-    generateButton: 'Generate',
+    generateButton: 'Generate Schedule',
   },
   pt: {
     generateSchedule: 'Gerar Grade de Horários',
@@ -33,7 +33,7 @@ const translations = {
     yearHalf: 'Semestre:',
     first: '1º',
     second: '2º',
-    generateButton: 'Gerar'
+    generateButton: 'Gerar Cronograma'
   }
 };
 
@@ -176,7 +176,7 @@ function CoordinatorScreen() {
                 <option value="course1">{translations[currentLanguage].computerScience}</option>
               </select>
             </div>
-            <div className="mb-4 flex items-center">
+            <div className="mb-4 flex items-center mt-8">
               <label className="block text-lg mb-0 mr-4">{translations[currentLanguage].yearHalf}</label>
               <div className="flex space-x-4">
                 <label className="flex items-center space-x-2">
@@ -206,7 +206,7 @@ function CoordinatorScreen() {
             <div className="flex justify-center">
               <button
                 onClick={algorithm ? handleGenerateSchedule : handleGenerateWithAI}
-                className="w-32 h-8 bg-[#000066] text-white rounded-[10px] shadow-md hover:shadow-lg flex justify-center items-center"
+                className="w-36 h-8 bg-[#000066] text-white rounded-[10px] shadow-md hover:shadow-lg flex justify-center items-center"
                 disabled={loading}>
                 {loading ? (
                   <ProgressSpinner style={{ width: '20px', height: '20px' }} strokeWidth="4" />
