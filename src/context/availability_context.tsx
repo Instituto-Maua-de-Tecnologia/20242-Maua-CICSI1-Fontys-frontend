@@ -7,6 +7,8 @@ import {AvailabilityRepositoryHttp} from "@/api/repositories/availability_reposi
 
 type AvailabilityContextType = {
     createAvailability: (data: CreateAvailabilityRequestDTO) => Promise<CreateAvailabilityResponseDTO>;
+    updateAvailability: (data: CreateAvailabilityRequestDTO) => Promise<CreateAvailabilityResponseDTO>;
+    getAvailabilityByUser: (userId: string) => Promise<CreateAvailabilityRequestDTO>;
 }
 
 const defaultAvailabilityContext = {
@@ -15,6 +17,21 @@ const defaultAvailabilityContext = {
             message: ''
         }
     },
+    updateAvailability: async (_data: CreateAvailabilityRequestDTO) => {
+        return {
+            message: ''
+        }
+    },
+    getAvailabilityByUser: async (_userId: string) => {
+        return {
+            availabilities: [{
+                slot_id: '',
+                value: 'Negociated',
+            }],
+            user_id: ''
+        }
+    }
+
 }
 
 export const AvailabilityContext = createContext<AvailabilityContextType>(defaultAvailabilityContext)
@@ -27,12 +44,33 @@ export default function AvailabilityContextProvider({ children }: PropsWithChild
             const response = await availabilityRepository.createAvailability(data)
             return response
         } catch (error: any) {
+            console.log("Error create availability context: ", error)
+            throw new Error(error)
+        }
+    }
+
+    async function updateAvailability(data: CreateAvailabilityRequestDTO) {
+        try {
+            const response = await availabilityRepository.updateAvailability(data)
+            return response
+        } catch (error: any) {
+            console.log("Error update availability context: ", error)
+            throw new Error(error)
+        }
+    }
+
+    async function getAvailabilityByUser(userId: string) {
+        try {
+            const response = await availabilityRepository.getAvailabilityByUser(userId)
+            return response
+        } catch (error: any) {
+            console.log("Error get availability context: ", error)
             throw new Error(error)
         }
     }
 
     return (
-        <AvailabilityContext.Provider value={{ createAvailability }}>
+        <AvailabilityContext.Provider value={{ createAvailability, updateAvailability, getAvailabilityByUser}}>
             {children}
         </AvailabilityContext.Provider>
     )
