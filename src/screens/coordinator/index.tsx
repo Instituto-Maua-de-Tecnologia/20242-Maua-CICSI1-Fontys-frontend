@@ -1,8 +1,8 @@
 import React, { useState, ChangeEvent } from 'react';
 import TranslationButtons from '@/components/translationButtons';
-import BtnCoordinator from '@/assets/btn-professor.png';
-import BtnCoordinator2 from '@/assets/btn-professor2.png';
-import LogoChat from '@/assets/chatLogo.png';
+import BtnCoordinator from '@/assets/images/btn-professor.png';
+import BtnCoordinator2 from '@/assets/images/btn-professor2.png';
+import LogoChat from '@/assets/images/chatLogo.png';
 import { useLanguage } from '@/components/languageProvider';
 import {useNavigate} from "react-router-dom";
 
