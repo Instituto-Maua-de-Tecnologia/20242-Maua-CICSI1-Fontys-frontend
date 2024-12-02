@@ -27,6 +27,8 @@ export default function ProfessorSchedule() {
   const [searchTerm, setSearchTerm] = useState("");
   const [showAllChecked, setShowAllChecked] = useState(false);
   const [showUnsentChecked, setShowUnsentChecked] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [users, setUsers] = useState([]);
   const { getProfessors } = useContext(UserContext);
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -54,15 +56,15 @@ export default function ProfessorSchedule() {
         return user.status === "sent" || user.status === "verified";
       }
       if (showUnsentChecked) {
-        return user.status === "unsent";
+        return (user.status === "unsent" || user.status === null);
       }
       return false;
     });
 
   const usersToDisplay = filteredUsers.sort((a, b) => {
     if (a.status === "sent" && (b.status === "verified" || b.status === "unsent")) return -1;
-    if (a.status === "verified" && b.status === "unsent") return -1;
-    if (a.status === "unsent" && (b.status === "sent" || b.status === "verified")) return 1;
+    if (a.status === "verified" && (b.status === "unsent" || b.status === null)) return -1;
+    if ((a.status === "unsent" || a.status === "null") && (b.status === "sent" || b.status === "verified")) return 1;
     return a.name.localeCompare(b.name);
   });
 
@@ -72,10 +74,14 @@ export default function ProfessorSchedule() {
   };
 
   async function fetchProfessors() {
+      setIsLoading(true);
       try {
           const response = await getProfessors();
           console.log("Fetch professors response",response)
+          setUsers(response);
+          setIsLoading(false);
       } catch (error) {
+          setIsLoading(false);
           console.error("Erro ao buscar perfil:", error);
       }
   }
@@ -130,11 +136,14 @@ export default function ProfessorSchedule() {
 
       {/* Scrollable user list */}
       <div className={`w-[80%] h-[60%] pr-4 scrollable mt-4 ${usersToDisplay.length > 0 ? "overflow-y-scroll" : ""}`}>
-        {usersToDisplay.length > 0 ? (
+        <div className="flex justify-center">
+            {isLoading && <div className="spinner-lg"/>}
+        </div>
+          {usersToDisplay.length > 0 ? (
           usersToDisplay.map((user, index) => (
             <button
               key={index}
-              className={`flex items-center justify-between mb-4 p-3 rounded-lg shadow w-full text-left transition-colors ${user.status === "unsent" ? "bg-black/30" : "bg-white hover:bg-light-gray"}`}
+              className={`flex items-center justify-between mb-4 p-3 rounded-lg shadow w-full text-left transition-colors ${(user.status === "unsent" || user.status === null) ? "bg-black/30" : "bg-white hover:bg-light-gray"}`}
               onClick={() => alert(`Selected: ${user.name}`)}
               disabled={user.status === "unsent"}
             >
