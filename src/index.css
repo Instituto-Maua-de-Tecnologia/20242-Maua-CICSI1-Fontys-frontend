@@ -25,11 +25,20 @@ body {
 }
 
 .spinner {
-  border: 4px solid #f3f3f3; /* Cor de fundo do spinner */
+  border: 4px solid #c7c7c7; /* Cor de fundo do spinner */
   border-top: 4px solid #ffffff; /* Cor da parte superior do spinner */
   border-radius: 50%;
   width: 24px;
   height: 24px;
+  animation: spin 1s linear infinite; /* Define a animação do giro */
+}
+
+.spinner-lg {
+  border: 4px solid #b7b7b7; /* Cor de fundo do spinner */
+  border-top: 4px solid #000066; /* Cor da parte superior do spinner */
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
   animation: spin 1s linear infinite; /* Define a animação do giro */
 }
 

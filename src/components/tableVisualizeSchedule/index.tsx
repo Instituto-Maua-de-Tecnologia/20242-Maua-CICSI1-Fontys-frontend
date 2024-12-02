@@ -2,15 +2,15 @@ import { useEffect, useState } from "react";
 import { useLanguage } from '../languageProvider';
 
 
-export default function TableVisualizeSchedule() {
+export default function TableVisualizeSchedule(selectedSubject: object | null) {
     const [selectedCell, setSelectedCell] = useState<{ row: number; col: string } | null>(null);
 
     // Definindo os cronogramas para cada semestre
     const schedules: { [key: number]: { time: string; monday: string; tuesday: string; wednesday: string; thursday: string; friday: string; saturday: string; }[] } = {
         1: [
-            { time: "7h40 - 9h20", monday: "TT1203\nRodrigo Bossini", tuesday: "", wednesday: "", thursday: "", friday: "", saturday: "" },
-            { time: "9h30 - 11h10", monday: "TT1203\nRodrigo Bossini", tuesday: "TT1204\nGuardado", wednesday: "", thursday: "", friday: "", saturday: "" },
-            { time: "11h20 - 13h00", monday: "TT1206\nRudolf", tuesday: "TT1204\nGuardado", wednesday: "", thursday: "", friday: "", saturday: "" },
+            { time: "7h40 - 9h20", monday: "TTI203\nRodrigo Bossini", tuesday: "TTI206\nRudolf", wednesday: "", thursday: "", friday: "", saturday: "" },
+            { time: "9h30 - 11h10", monday: "TTI203\nRodrigo Bossini", tuesday: "TTI204\nGuardado", wednesday: "", thursday: "", friday: "", saturday: "" },
+            { time: "11h20 - 13h00", monday: "TTI204\nGuardado", tuesday: "TTI203\nRodrigo Bossini", wednesday: "", thursday: "", friday: "", saturday: "" },
             { time: "13h10 - 14h50", monday: "", tuesday: "", wednesday: "", thursday: "", friday: "", saturday: "" },
             { time: "15h00 - 16h40", monday: "", tuesday: "", wednesday: "", thursday: "", friday: "", saturday: "" },
             { time: "16h50 - 18h30", monday: "", tuesday: "", wednesday: "", thursday: "", friday: "", saturday: "" },
@@ -18,9 +18,9 @@ export default function TableVisualizeSchedule() {
             { time: "20h50 - 22h30", monday: "", tuesday: "", wednesday: "", thursday: "", friday: "", saturday: "" },
         ],
         2: [
-            { time: "7h40 - 9h20", monday: "TT1204\nGuardado", tuesday: "", wednesday: "", thursday: "", friday: "", saturday: "" },
-            { time: "9h30 - 11h10", monday: "TT1204\nGuardado", tuesday: "TT1206\nRudolf", wednesday: "", thursday: "", friday: "", saturday: "" },
-            { time: "11h20 - 13h00", monday: "TT1203\nRodrigo Bossini", tuesday: "TT1206\nRudolf", wednesday: "", thursday: "", friday: "", saturday: "" },
+            { time: "7h40 - 9h20", monday: "TTI204\nGuardado", tuesday: "", wednesday: "", thursday: "", friday: "", saturday: "" },
+            { time: "9h30 - 11h10", monday: "TTI204\nGuardado", tuesday: "TTI206\nRudolf", wednesday: "", thursday: "", friday: "", saturday: "" },
+            { time: "11h20 - 13h00", monday: "TTI203\nRodrigo Bossini", tuesday: "TTI206\nRudolf", wednesday: "", thursday: "", friday: "", saturday: "" },
             { time: "13h10 - 14h50", monday: "", tuesday: "", wednesday: "", thursday: "", friday: "", saturday: "" },
             { time: "15h00 - 16h40", monday: "", tuesday: "", wednesday: "", thursday: "", friday: "", saturday: "" },
             { time: "16h50 - 18h30", monday: "", tuesday: "", wednesday: "", thursday: "", friday: "", saturday: "" },
@@ -28,9 +28,9 @@ export default function TableVisualizeSchedule() {
             { time: "20h50 - 22h30", monday: "", tuesday: "", wednesday: "", thursday: "", friday: "", saturday: "" },
         ],
         3: [
-            { time: "7h40 - 9h20", monday: "TT1206\nRudolf", tuesday: "", wednesday: "", thursday: "", friday: "", saturday: "" },
-            { time: "9h30 - 11h10", monday: "TT1206\nRudolf", tuesday: "TT1203\nRodrigo Bossini", wednesday: "", thursday: "", friday: "", saturday: "" },
-            { time: "11h20 - 13h00", monday: "TT1204\nGuardado", tuesday: "TT1203\nRodrigo Bossini", wednesday: "", thursday: "", friday: "", saturday: "" },
+            { time: "7h40 - 9h20", monday: "TTI206\nRudolf", tuesday: "", wednesday: "", thursday: "", friday: "", saturday: "" },
+            { time: "9h30 - 11h10", monday: "TTI206\nRudolf", tuesday: "TTI203\nRodrigo Bossini", wednesday: "", thursday: "", friday: "", saturday: "" },
+            { time: "11h20 - 13h00", monday: "TTI204\nGuardado", tuesday: "TTI203\nRodrigo Bossini", wednesday: "", thursday: "", friday: "", saturday: "" },
             { time: "13h10 - 14h50", monday: "", tuesday: "", wednesday: "", thursday: "", friday: "", saturday: "" },
             { time: "15h00 - 16h40", monday: "", tuesday: "", wednesday: "", thursday: "", friday: "", saturday: "" },
             { time: "16h50 - 18h30", monday: "", tuesday: "", wednesday: "", thursday: "", friday: "", saturday: "" },
@@ -38,9 +38,9 @@ export default function TableVisualizeSchedule() {
             { time: "20h50 - 22h30", monday: "", tuesday: "", wednesday: "", thursday: "", friday: "", saturday: "" },
         ],
         4: [
-            { time: "7h40 - 9h20", monday: "TT1203\nRodrigo Bossini", tuesday: "", wednesday: "", thursday: "", friday: "", saturday: "" },
-            { time: "9h30 - 11h10", monday: "TT1203\nRodrigo Bossini", tuesday: "TT1204\nGuardado", wednesday: "", thursday: "", friday: "", saturday: "" },
-            { time: "11h20 - 13h00", monday: "TT1206\nRudolf", tuesday: "TT1204\nGuardado", wednesday: "", thursday: "", friday: "", saturday: "" },
+            { time: "7h40 - 9h20", monday: "TTI203\nRodrigo Bossini", tuesday: "", wednesday: "", thursday: "", friday: "", saturday: "" },
+            { time: "9h30 - 11h10", monday: "TTI203\nRodrigo Bossini", tuesday: "TTI204\nGuardado", wednesday: "", thursday: "", friday: "", saturday: "" },
+            { time: "11h20 - 13h00", monday: "TTI206\nRudolf", tuesday: "TTI204\nGuardado", wednesday: "", thursday: "", friday: "", saturday: "" },
             { time: "13h10 - 14h50", monday: "", tuesday: "", wednesday: "", thursday: "", friday: "", saturday: "" },
             { time: "15h00 - 16h40", monday: "", tuesday: "", wednesday: "", thursday: "", friday: "", saturday: "" },
             { time: "16h50 - 18h30", monday: "", tuesday: "", wednesday: "", thursday: "", friday: "", saturday: "" },
@@ -64,12 +64,13 @@ export default function TableVisualizeSchedule() {
     const getCellStyle = (text: string, isSelected: boolean) => {
         const baseStyle = 'border border-black px-2 py-3 min-w-[100px] min-h-[50px] transition-all';
         const selectedStyle = isSelected ? 'border-4 border-black-500' : '';
+        const selectedSubjectStyle = selectedSubject ? text.includes(selectedSubject.selectedSubject) ? 'bg-[#2B49A3] text-white' : 'bg-gray-500' : '';
         if (text.includes("Rodrigo Bossini")) {
-            return `${baseStyle} bg-[#2B49A3] text-white ${selectedStyle}`;
+            return `${baseStyle} ${selectedStyle} ${selectedSubjectStyle} text-white bg-[#2B49A3]`;
         } else if (text.includes("Guardado")) {
-            return `${baseStyle} bg-gray-500 text-white ${selectedStyle}`;
+            return `${baseStyle} text-white ${selectedStyle} ${selectedSubjectStyle}`;
         } else if (text.includes("Rudolf")) {
-            return `${baseStyle} bg-[#857A77] text-white ${selectedStyle}`;
+            return `${baseStyle} text-white ${selectedStyle} ${selectedSubjectStyle}`;
         }
         return `${baseStyle} ${selectedStyle}`;
     };
@@ -78,20 +79,6 @@ export default function TableVisualizeSchedule() {
     const { currentLanguage } = useLanguage();
     const [selectedSemester, setSelectedSemester] = useState<number>(1); // Estado para armazenar o semestre selecionado
     const [currentSchedule, setCurrentSchedule] = useState(schedules[1]); // Estado inicial do cronograma
-
-    // Função para definir qual semestre foi selecionado
-
-    const getScheduleFromStorage = (semester: number) => {
-        const storedSchedule = localStorage.getItem(`semester_${semester}`);
-        if (storedSchedule) {
-            return JSON.parse(storedSchedule);
-        }
-        return schedules[semester];
-    };
-
-    const saveScheduleToStorage = (semester: number, updatedSchedule: typeof currentSchedule) => {
-        localStorage.setItem(`semester_${semester}`, JSON.stringify(updatedSchedule));
-    };
 
     const handleCellClick = (rowIndex: number, col: keyof typeof currentSchedule[0]) => {
         const clickedCell = currentSchedule[rowIndex][col];
@@ -108,22 +95,21 @@ export default function TableVisualizeSchedule() {
             newSchedule[rowIndex][col] = selectedContent;
 
             setCurrentSchedule(newSchedule);
-            saveScheduleToStorage(selectedSemester, newSchedule); // Salva no localStorage
+            // saveScheduleToStorage(selectedSemester, newSchedule); // Salva no localStorage
             setSelectedCell(null);
         }
     };
 
     const handleSemesterChange = (semester: number) => {
         setSelectedSemester(semester);
-        const loadedSchedule = getScheduleFromStorage(semester);
-        setCurrentSchedule(loadedSchedule);
+        setCurrentSchedule(schedules[semester]);
     };
 
-    useEffect(() => {
-        const loadedSchedule = getScheduleFromStorage(selectedSemester);
-        setCurrentSchedule(loadedSchedule);
-    }, [selectedSemester]);
-    
+    // useEffect(() => {
+    //     const loadedSchedule = getScheduleFromStorage(selectedSemester);
+    //     setCurrentSchedule(loadedSchedule);
+    // }, [selectedSemester]);
+    //
 
     return (
         <div className="container mx-auto px-4 py-6">
