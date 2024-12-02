@@ -24,19 +24,16 @@ body {
   font-family: 'Jost',serif;
 }
 
-.border-dash:focus{
-  outline-style: solid;
-  outline-color: black;
-  outline-width: 3px;
-  z-index: 100;
-  box-shadow: inset 0 2px 4px 0 rgb(0 0 0 / 0.5);
+.spinner {
+  border: 4px solid #f3f3f3; /* Cor de fundo do spinner */
+  border-top: 4px solid #ffffff; /* Cor da parte superior do spinner */
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  animation: spin 1s linear infinite; /* Define a animação do giro */
 }
 
-@keyframes rotateOutline {
-  0% {
-
-  }
-  100% {
-    
-  }
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
