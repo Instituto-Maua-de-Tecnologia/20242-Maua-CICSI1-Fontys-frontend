@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import {useContext, useEffect, useState} from "react";
 import { useLanguage } from '../languageProvider';
-
+import {ScheduleContext} from "@/context/schedule_context.tsx";
 
 export default function TableVisualizeSchedule(selectedSubject: object | null) {
     const [selectedCell, setSelectedCell] = useState<{ row: number; col: string } | null>(null);
+    const { getSchedule } = useContext(ScheduleContext);
 
     // Definindo os cronogramas para cada semestre
     const schedules: { [key: number]: { time: string; monday: string; tuesday: string; wednesday: string; thursday: string; friday: string; saturday: string; }[] } = {
@@ -75,7 +76,6 @@ export default function TableVisualizeSchedule(selectedSubject: object | null) {
         return `${baseStyle} ${selectedStyle}`;
     };
 
-
     const { currentLanguage } = useLanguage();
     const [selectedSemester, setSelectedSemester] = useState<number>(1); // Estado para armazenar o semestre selecionado
     const [currentSchedule, setCurrentSchedule] = useState(schedules[1]); // Estado inicial do cronograma
@@ -110,6 +110,20 @@ export default function TableVisualizeSchedule(selectedSubject: object | null) {
     //     setCurrentSchedule(loadedSchedule);
     // }, [selectedSemester]);
     //
+
+    async function handleGetSchedule() {
+        try {
+            const response = await getSchedule();
+            // setCurrentSchedule(response);
+            console.log(getSchedule)
+        }catch{
+            return [];
+        }
+    }
+
+    useEffect(() => {
+        handleGetSchedule();
+    }, []);
 
     return (
         <div className="container mx-auto px-4 py-6">
